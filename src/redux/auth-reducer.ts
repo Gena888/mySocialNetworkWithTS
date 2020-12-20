@@ -7,27 +7,19 @@ const SET_USER_PROFILE = '/auth-reducer/SET_USER_PROFILE'
 const SET_CUPTCHA = '/auth-reducer/SET_CUPTCHA'
 const SET_ERROR = '/auth-reducer/SET_ERROR'
 
-export type inilialStateType = {
-    userId: number | null,
-    email: string | null,
-    login: string | null,
-    isAuth: boolean,
-    isFetching: boolean,
-    rememberMe: boolean,
-    captchaUrl: string | null,
-    inStateError: string | null
-}
 
-let inilialState: inilialStateType = {
-    userId: null,
-    email: null,
-    login: null,
-    isAuth: false,
-    isFetching: true,
-    rememberMe: false,
-    captchaUrl: null,
-    inStateError: null
+let inilialState = {
+    userId: null as number | null,
+    email: null as string | null,
+    login: null as string | null,
+    isAuth: false as boolean,
+    isFetching: true as boolean,
+    rememberMe: false as boolean,
+    captchaUrl: null as string | null,
+    inStateError: null as string | null
 };
+
+export type inilialStateType = typeof inilialState;
 
 const authReducer = (state = inilialState, action: any): inilialStateType => {
 
