@@ -1,5 +1,5 @@
 import { stopSubmit } from 'redux-form';
-import { authAPI, securityAPI } from './../api/api';
+import { authAPI, securityAPI } from '../api/api';
 
 
 const SET_USER_DATA = '/auth-reducer/SET_USER_DATA';
@@ -7,8 +7,18 @@ const SET_USER_PROFILE = '/auth-reducer/SET_USER_PROFILE'
 const SET_CUPTCHA = '/auth-reducer/SET_CUPTCHA'
 const SET_ERROR = '/auth-reducer/SET_ERROR'
 
+export type inilialStateType = {
+    userId: number | null,
+    email: string | null,
+    login: string | null,
+    isAuth: boolean,
+    isFetching: boolean,
+    rememberMe: boolean,
+    captchaUrl: string | null,
+    inStateError: string | null
+}
 
-let inilialState = {
+let inilialState: inilialStateType = {
     userId: null,
     email: null,
     login: null,
@@ -19,7 +29,7 @@ let inilialState = {
     inStateError: null
 };
 
-const authReducer = (state = inilialState, action) => {
+const authReducer = (state = inilialState, action: any): inilialStateType => {
 
     switch (action.type) {
 
@@ -51,16 +61,43 @@ const authReducer = (state = inilialState, action) => {
     }
 }
 // action creators
+type SetAuthUserDataPayloadType = {
+    userId: number| null,
+    email: string| null,
+    login: string| null,
+    isAuth: boolean,
+    captchaUrl: string| null
+}
 
-export const setAuthUserData = (userId, email, login, isAuth, captchaUrl) =>
+type SetAuthUserDataType = {
+    type: typeof SET_USER_DATA,
+    payload: SetAuthUserDataPayloadType
+}
+
+type SetUserProfileDataType = {
+    type: typeof SET_USER_PROFILE,
+    profileUserData: any
+}
+
+type SetCuptchaUrlType = {
+    type: typeof SET_CUPTCHA,
+    captchaUrl: string
+}
+
+type SetErrorType = {
+    type: typeof SET_ERROR,
+    error: string | null
+}
+
+export const setAuthUserData = (userId: number| null , email: string| null, login: string| null, isAuth: boolean, captchaUrl: string | null): SetAuthUserDataType =>
     ({ type: SET_USER_DATA, payload: { userId, email, login, isAuth, captchaUrl } });
-export const setUserProfileData = (profileUserData) => ({ type: SET_USER_PROFILE, profileUserData })
-export const setCuptchaUrl = (captchaUrl) => ({ type: SET_CUPTCHA, captchaUrl })
-export const setError = (error) => ({ type: SET_ERROR, error })
+export const setUserProfileData = (profileUserData: any): SetUserProfileDataType => ({ type: SET_USER_PROFILE, profileUserData })
+export const setCuptchaUrl = (captchaUrl: string): SetCuptchaUrlType => ({ type: SET_CUPTCHA, captchaUrl })
+export const setError = (error: string | null): SetErrorType => ({ type: SET_ERROR, error })
 
 // thunks
 
-export const getUserDataThunk = () => async (dispatch) => {
+export const getUserDataThunk = () => async (dispatch: any) => {
     let data = await authAPI.me()
 
     if (data.resultCode === 0) {
@@ -69,7 +106,7 @@ export const getUserDataThunk = () => async (dispatch) => {
     }
 }
 
-export const LoginThunk = (email, password, rememberMe, captcha) => async (dispatch) => {
+export const LoginThunk = (email:string, password:string, rememberMe:boolean, captcha:string) => async (dispatch:any) => {
     let data = await authAPI.Login(email, password, rememberMe, captcha)
 
     if (data.resultCode === 0) {
@@ -85,19 +122,19 @@ export const LoginThunk = (email, password, rememberMe, captcha) => async (dispa
     }
 }
 
-export const LogoutThunk = () => async (dispatch) => {
+export const LogoutThunk = () => async (dispatch:any) => {
     let data = await authAPI.Logout()
     if (data.resultCode === 0) {
-        dispatch(setAuthUserData(null, null, null, false))
+        dispatch(setAuthUserData(null, null, null, false, null))
     }
 }
 
-export const getCaptchaThunk = () => async (dispatch) => {
+export const getCaptchaThunk = () => async (dispatch:any) => {
     let data = await securityAPI.getCaptchaUrt()
     dispatch(setCuptchaUrl(data.url))
 }
 
-export const setErrorThunk = (error) => (dispatch) => {
+export const setErrorThunk = (error:string | null) => (dispatch:any) => {
     dispatch(setError(error))
 }
 
