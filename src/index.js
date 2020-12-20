@@ -6,7 +6,7 @@ import SamuraiJsApp from './App'
 
 ReactDOM.render(
   <SamuraiJsApp />
-  , document.getElementById('root')
+   , document.getElementById('root')
 );
 
 

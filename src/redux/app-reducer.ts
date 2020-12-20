@@ -3,12 +3,16 @@ import { getUserDataThunk } from './auth-reducer';
 
 const INITIALIZED_SUCCESS = 'INITIALIZED_SUCCESS'
 
+export type InitialStateType = {
+    initialized: boolean
+}
 
-let initialState = {
+let initialState: InitialStateType = {
     initialized: false
 }
 
-const appReducer = (state = initialState, action) => {
+
+const appReducer = (state = initialState, action: any): InitialStateType => {
     switch (action.type) {
         case INITIALIZED_SUCCESS:
             return {
@@ -22,14 +26,17 @@ const appReducer = (state = initialState, action) => {
 
 }
 
+type InitializedSuccessActionType = {
+    type: typeof INITIALIZED_SUCCESS
+}
 
-export const initializedSuccess = () => ({
+export const initializedSuccess = (): InitializedSuccessActionType => ({
     type: INITIALIZED_SUCCESS
 })
 
 
 
-export const initializeApp = () => (dispatch) => {
+export const initializeApp = () => (dispatch: any) => {
     let promise = dispatch(getUserDataThunk());
     // let promi se2 = dispatch(какая то санка);
     // let promise3 = dispatch(ещё что то диспатчится);
@@ -39,7 +46,7 @@ export const initializeApp = () => (dispatch) => {
     });
 }
 
-   
+
 // когда все промисы заРезолвятся, тогда ты делаешь диспатч инициализации
 
 // export const initializeApp = () => async (dispatch) => {
