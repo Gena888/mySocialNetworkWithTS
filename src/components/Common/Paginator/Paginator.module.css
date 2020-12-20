@@ -1,0 +1,41 @@
+.paginator {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.pages {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.pageNumber {
+    margin: 5px;
+}
+
+.pageNumber.selectedPage {
+    font-weight: bold;
+    border-bottom: solid 3px #80A8CC;
+}
+
+.buttonDiv {
+    min-width: 40px;
+    
+}
+
+.prevButton {}
+
+.netxButton {}
+
+.button {
+    padding: 4px 8px 3px 8px;
+    border-radius: 10%;
+    border: none;
+    background-color: #80A8CC;
+    font-family: sans-serif;
+    color: #FFFBF5;
+    outline: none;
+    cursor: pointer;
+}

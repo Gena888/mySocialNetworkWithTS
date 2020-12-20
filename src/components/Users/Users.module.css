@@ -1,0 +1,17 @@
+.usersWrapper {
+    margin: 20px;
+    background-color: #FFFBF5;
+    border: solid 2px #ECE8E2;
+    padding: 10px 20px 10px 20px;
+}
+
+.userPhoto {
+    max-width: 80px;
+}
+
+.usersDiv {
+    display: flex;
+    flex-direction: column;
+}
+
+.paginatorDiv {}

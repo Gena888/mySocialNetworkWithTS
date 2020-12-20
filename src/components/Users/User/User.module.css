@@ -1,0 +1,35 @@
+.userWrapp {
+    /* max-width: 200px; */
+    display: flex;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    border: solid 2px #ECE8E2;
+    padding: 5px;
+}
+
+.userPhoto img {
+    max-width: 80px;
+}
+
+.userInfo {
+    margin-left: 15px;
+    display: flex;
+    padding: 5px 0 5px 0;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.userName {}
+
+.userStatus {}
+
+.button button {
+    padding: 4px 8px 3px 8px;
+    border-radius: 10%;
+    border: none;
+    background-color: #80A8CC;
+    font-family: sans-serif;
+    color: #FFFBF5;
+    outline: none;
+    cursor: pointer;
+}

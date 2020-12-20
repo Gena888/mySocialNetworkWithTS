@@ -1,0 +1,268 @@
+.profileInfo {
+    margin: 20px;
+    background-color: #FFFBF5;
+    border: solid 2px #ECE8E2;
+}
+
+.descriptionBlock {
+    padding: 10px;
+    display: flex;
+    /* flex-direction: column; */
+}
+
+@media (max-width: 768px) {
+    .descriptionBlock {
+        padding: 10px;
+        display: flex;
+        flex-direction: column;
+    }  
+}
+
+/* imageBlock */
+
+.imageBlock {
+    display: flex;
+    margin-right: 20px;
+    flex-direction: column;
+    height: 100%;
+}
+
+.innetImageBlock {
+    position: relative;
+    /* flex-basis: content; */
+}
+
+.onImgButtons {
+    position: absolute;
+    top: 88.7%;
+    display: flex;
+    margin-right: -3px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    max-width: 250px;
+}
+
+.changePhotoBtn input {
+    position: absolute;
+    overflow: hidden;
+    z-index: -1;
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+}
+
+.changePhotoBtn label {
+    padding: 6px 10px 5px 10px;
+    border-radius: 0%;
+    border: none;
+    background-color: #80A8CC;
+    font-family: sans-serif;
+    color: #FFFBF5;
+    outline: none;
+    font-size: 14px;
+    opacity: 0.5;
+    transition: .2s;
+    border-radius: 0 40% 0 0;
+}
+
+.changePhotoBtn label:hover {
+    opacity: 1;
+    transition: .2s;
+}
+
+.editButton button {
+    padding: 5px 10px 5px 10px;
+    border-radius: 0%;
+    border: none;
+    background-color: #80A8CC;
+    font-family: sans-serif;
+    color: #FFFBF5;
+    outline: none;
+    font-size: 15px;
+    position: relative;
+    top: -2px;
+    opacity: 0.5;
+    border-radius: 50% 0 0 0;
+}
+
+.editButton button:hover {
+    opacity: 1;
+    transition: .2s;
+}
+
+.userPhoto {
+    max-width: 250px;
+}
+
+/* infoblock */
+
+.infoBlock {
+    display: flex;
+    flex-direction: column;
+    color: #626269;
+    width: 100%;
+}
+
+.statusBlock {
+    display: block;
+    width: 100%;
+}
+
+.innerStatusBlock {
+    border: solid 1px #ECE8E2;
+    padding: 10px 10px 10px 10px;
+    margin-left: -10px;
+}
+
+.statusBlock input {
+    width: 100%;
+    border: none;
+    border-bottom: solid 1px #ECE8E2;
+    font-size: 18px;
+    font-family: sans-serif;
+    background-color: transparent;
+    padding: 5px;
+    outline: none;
+    color: #626269;
+}
+
+.userStatus {
+    color: #626269;
+    font-size: 18px;
+    font-family: sans-serif;
+}
+
+/* textInfoBlock */
+
+.textInfoBlock {
+    margin-top: 10px;
+}
+
+.textInfoBlock div {
+    padding: 5px 0 0 0;
+}
+
+/* innerContactsBlock */
+
+.innerContactsBlock {
+    margin-top: 20px;
+    margin-left: -10px;
+    margin-right: -10px;
+}
+
+.innerContactsBlock img {
+    max-width: 50px;
+    padding: 0 10px 0 10px;
+    /* margin-top: -10px; */
+}
+
+/* profile data form  */
+
+.profileDataForm {
+    width: 100%;
+}
+
+.profileDataForm input {
+    width: 100%;
+    margin: -10px 0 -10px 0;
+    border-bottom:  solid 2px #ECE8E2;
+}
+
+.profileDataForm textarea {
+    width: 100%;
+    resize: none;
+    border-bottom:  solid 2px #ECE8E2;
+}
+
+.jobLooking input {
+    display: inline-block;
+    width: 30px;
+}
+
+.profileDataFormDiv {
+    display: flex;
+    width: 95%;
+    align-items: center;
+}
+
+.profileDataFormDiv div {
+    width: 90%;
+}
+
+.profileDataFormDiv b {
+    width: 80px
+}
+
+.profileDataFormDiv {}
+
+.contacts {
+    margin-left: -270px;
+}
+
+@media (max-width: 768px) {
+    .contacts {
+        margin-left: 0
+    }
+}
+
+.mainInfo div {
+}
+
+.mainInfo b {
+    width: 200px
+}
+
+.mainInfo textarea {
+    margin-bottom: 0px;
+
+}
+
+.contact {
+    padding-left: 10px;
+}
+
+.contactsBlog input {
+    width: 70%
+}
+
+@media (max-width: 768px) {
+    .contactsBlog input {
+        width: 100%
+    }
+}
+
+
+.job input {
+    margin-left: -50px;
+    
+}
+
+.saveDiv {
+    padding: 10px 10px 10px 0px ; 
+    position: absolute;
+    top: 82px;
+    left: 412px;
+}
+
+.saveDiv button{
+    padding: 6px 10px 5px 10px;
+    border-radius: 0 0 0 40%;
+    border: none;
+    background-color: #80A8CC;
+    font-family: sans-serif;
+    color: #FFFBF5;
+    outline: none;
+
+}
+
+@media (max-width: 425px) {
+    .saveDiv button{
+        margin-left: -70px;
+  }
+}  
+@media (max-width: 768px) {
+    .saveDiv button{
+        margin-left: -30px;
+  }
+}  

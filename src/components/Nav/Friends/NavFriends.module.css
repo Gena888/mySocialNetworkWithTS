@@ -1,0 +1,25 @@
+.navFriendsElement {
+    display: flex;
+    align-items: center;
+    margin-left: -10px;  
+    padding-top: 10px;  
+}
+
+@media (max-width: 425px) {
+    .navFriendsElement {
+        flex-direction: column;
+    }
+}
+
+.navFriendsElement img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50px;
+}
+
+.navFriendsElementName {
+    text-align: center;
+    padding-left: 10px;
+    text-transform: capitalize;
+    color: #FFFBF5;
+}

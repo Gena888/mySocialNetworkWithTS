@@ -1,0 +1,56 @@
+.header {
+  grid-area: h;
+  background-color: #FFFBF5;
+  border-bottom: solid 1px #e4e0dab7;
+}
+
+.innerHeader {}
+
+.header img {
+  margin-top: -20px;
+  margin-left: 40px;
+  width: 100px;
+}
+
+.loginBlock {
+  float: right;
+}
+
+.loginBlock a {
+  color: white;
+}
+
+.loginBlock {
+  margin: 8px 10px 0px 0;
+}
+
+.loginBlock button {
+  padding: 6px 10px 5px 10px;
+  border-radius: 10%;
+  border: none;
+  background-color: #80A8CC;
+  font-family: sans-serif;
+  color: #FFFBF5;
+  outline: none;
+  margin-left: 10px;
+  cursor: pointer;
+}
+
+.loginEmail {
+  color: #626269;
+  /* color: #80A8CC; */
+  /* border-bottom: solid 1px black; */
+}
+
+.loginBlock a {
+  padding: 6px 10px 5px 10px;
+  border-radius: 10%;
+  background-color: #80A8CC;
+  font-family: sans-serif;
+  color: #FFFBF5;
+  text-decoration: none;
+}
+
+.loginBlock a:hover {
+  background-color: #8ab5da;
+}

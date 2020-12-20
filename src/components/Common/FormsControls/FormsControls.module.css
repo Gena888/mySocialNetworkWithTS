@@ -1,0 +1,58 @@
+/* .formControl.error input,  */
+
+.formControl.error textarea {
+    /* border: solid 1px red; */
+    font-family: sans-serif;
+    /* padding-top: 10px; */
+}
+
+.formErrorDiv {
+    color: rgb(187, 28, 28);
+    font-family: sans-serif;
+    /* padding-top: 10px; */
+    letter-spacing: .06em;
+    word-spacing: .1em;
+    padding-top: 5px;
+    padding-left: 5px;
+}
+
+.formSummeryError {
+    /* border: solid 1px red; */
+    /* padding: 10px; */
+    color: rgb(187, 28, 28);
+    font-size: ;
+    font-family: sans-serif;
+}
+
+/* // */
+
+.formControl {
+    padding: 10px;
+}
+
+.textarea {
+    border: none;
+    border-bottom: solid 1px #626269;
+    font-size: 18px;
+    font-family: sans-serif;
+    background-color: transparent;
+    padding: 5px;
+    outline: none;
+    color: #626269;
+}
+
+.input {
+    border: none;
+    border-bottom: solid 1px #626269;
+    font-size: 18px;
+    font-family: sans-serif;
+    background-color: transparent;
+    padding: 5px;
+    outline: none;
+    color: #626269;
+}
+
+.input:focus {
+    border: none;
+    border-bottom: solid 1px black
+}

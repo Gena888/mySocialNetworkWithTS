@@ -1,0 +1,76 @@
+.dialogs {
+    display: grid;
+    max-width: 1200px;
+    /* margin: auto; */
+}
+
+.dialogsItems {
+    padding: 10px;
+    display: flex;
+    justify-content: space-around;
+    background-color: #FFFBF5;
+    margin: 20px;
+    border: solid 2px #ECE8E2;
+}
+
+.dialogsItems a {
+    color: #626269;
+    text-transform: capitalize;
+    text-decoration: none;
+}
+
+.dialogsItems .active {
+    color: gold;
+}
+
+.messages {
+    padding: 20px;
+    background-color: #FFFBF5;
+    margin: 0 20px 20px 20px;
+    border: solid 2px #ECE8E2;
+}
+
+.message div {
+    color: #626269;
+}
+
+.messageInput {
+    margin-top: 30px;
+}
+
+.dialogsButton {
+    position: absolute;
+    left: 91.5%;
+    top: 42%;
+}
+
+.dialogsButton button {
+    padding: 6px 10px 5px 10px;
+    border-radius: 10%;
+    border: none;
+    background-color: #80A8CC;
+    font-family: sans-serif;
+    color: #FFFBF5;
+    outline: none;
+    cursor: pointer;
+
+}
+
+.dialogsForm {
+    position: relative;
+}
+
+.dialogsForm textarea {
+    width: 89%;
+    margin-left: -5px;
+    padding-bottom: 0px;
+    padding: 5px;
+    padding-top: 20px;
+    resize: none;
+    /* background: linear-gradient(#FFFBF5, #ECE8E2); */
+    border-bottom: solid 2px #ECE8E2;
+}
+
+.dialogsButton button:hover {
+    background-color: #8ab5da;
+}

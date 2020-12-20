@@ -1,0 +1,73 @@
+.addPostForm {
+  /* display: flex; */
+  position: relative;
+}
+
+.posts {
+  color: aliceblue;
+  margin-top: 10px;
+}
+
+.postsBlock {
+  margin: 20px;
+  padding: 10px;
+  background-color: #FFFBF5;
+  border: solid 2px #ECE8E2;
+}
+
+.addPostForm textarea {
+  margin-left: -5px;
+  width: 90%;
+  padding-bottom: 0px;
+  padding: 5px;
+  padding-top: 20px;
+  resize: none;
+  /* background: linear-gradient(#FFFBF5, #ECE8E2); */
+  border-bottom: solid 2px #ECE8E2;
+}
+
+.addPostButton {
+  position: absolute;
+  top: 42%;
+  left: 92%;
+}
+
+@media (max-width: 768px) {
+  .addPostButton {
+    position: absolute;
+    top: 42%;
+    left: 85%;
+  }
+  .addPostForm textarea {
+    width: 80%;
+  }
+}
+
+.addPostButton button {
+  padding: 6px 10px 5px 10px;
+  border-radius: 10%;
+  border: none;
+  background-color: #80A8CC;
+  font-family: sans-serif;
+  color: #FFFBF5;
+  outline: none;
+  cursor: pointer;
+}
+
+.addPostButton button:hover {
+  background-color: #8ab5da;
+}
+
+.postsBlock h3 {
+  margin-top: 8px;
+  margin-bottom: 0px;
+  padding-left: 10px;
+  /* text-transform:capitalize; */
+  font-family: sans-serif;
+  font-weight: 500;
+  color: #626269;
+}
+
+.postsBlock {
+  
+}

@@ -1,0 +1,31 @@
+.item {
+  color: #626269;
+  padding: 15px;
+  border: solid 2px #ECE8E2;
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.itemImg {
+  height: 80px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.postInfo {
+  display: flex;
+  flex-direction: column;
+  /* align-items: center; */
+  height: 100%;
+}
+
+.textInfo {
+  padding-left: 5px;
+}
+
+.likes {
+margin-left: 8px;
+padding-top: 5px;
+margin-bottom: -5px;
+}

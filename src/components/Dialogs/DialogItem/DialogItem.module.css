@@ -1,0 +1,19 @@
+.dialog a {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.avaImg img {
+    height: 50px;
+    width: 50px;
+    border-radius: 50px;
+    border: solid 2px #80A8CC;
+}
+
+.active img{
+    height: 50px;
+    width: 50px;
+    border-radius: 50px;
+    border: solid 4px #80A8CC;
+}

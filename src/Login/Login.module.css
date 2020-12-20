@@ -1,0 +1,74 @@
+.formSummeryError {
+    border: solid 1px red;
+    padding: 5px;
+    color: red;
+    display: inline-block;
+}
+
+.captcha {
+    padding: 5px;
+}
+
+.loginInner {
+    margin-left: -100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 70%;
+}
+
+.loginInner h1 {
+    text-transform: capitalize;
+    letter-spacing: .1em;
+    font-family: sans-serif;
+}
+
+.loginButton {
+    padding: 10px 5px 10px 15px;
+    border: none;
+    margin-right: 23px;
+}
+
+.loginButton button {
+    padding: 6px 10px 5px 10px;
+    border-radius: 10%;
+    border: none;
+    background-color: #80A8CC;
+    font-family: sans-serif;
+    color: #FFFBF5;
+    outline: none;
+    cursor: pointer;
+}
+
+.loginButton button:hover {
+    padding: 6px 10px 5px 10px;
+    border-radius: 10%;
+    border: none;
+    background-color: #8ab5da;
+    font-family: sans-serif;
+    color: #FFFBF5;
+}
+
+.buttonAndRemember {
+    display: flex;
+    align-items: center;
+}
+
+.rememberMeDiv label {
+    display: flex;
+    align-items: center;
+}
+
+.rememberMeDiv input:checked {
+    color: red;
+    background-color: red;
+}
+
+.rememberMeDiv span {
+    position: relative;
+    top: -1.5px;
+    margin-left: -5px;
+    color: #626269;
+}
+
