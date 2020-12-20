@@ -39,7 +39,7 @@ let inilialState = {
     ] as Array<messagesDataType>
 }
 
-const dialogsReducer = (state = inilialState, action: any) => {
+const dialogsReducer = (state = inilialState, action: any): InilialStateType => {
 
     switch (action.type) {
 
@@ -64,7 +64,7 @@ type addNewMessageACType = {
     newMessageBody: string
 }
 
-export const addNewMessageAC = (newMessageBody: string):addNewMessageACType => ({
+export const addNewMessageAC = (newMessageBody: string): addNewMessageACType => ({
     type: ADD_NEW_MESSAGE,
     newMessageBody
 });
