@@ -1,6 +1,6 @@
 import { profileAPI } from '../api/api';
 import { stopSubmit } from 'redux-form';
-import { type } from './dialogs-reducer';
+import { PhotosType, postDataType, ProfileType } from '../types/types';
 
 const ADD_POST = '/profile-reducer/ADD-POST';
 const SET_USER_PROFILE = '/profile-reducer/SET_USER_PROFILE';
@@ -9,36 +9,6 @@ const DELETE_POST = '/profile-reducer/DELETE_POST';
 const SAVE_PHOTO_SUCCESS = '/profile-reducer/SAVE_PHOTO_SUCCESS';
 const SET_IS_VALID_INPUT = '/profile-reducer/SET_IS_VALID_INPUT'
 
-type postDataType = {
-    id: number
-    likes: number
-    message: string
-}
-
-type ContactsType = {
-    github: string
-    vk: string
-    facebook: string
-    instagram: string
-    twitter: string
-    website: string
-    youtube: string
-    mainLink: string
-}
-
-type PhotosType = {
-    small: string | null
-    large: string | null
-}
-
-type ProfileType = {
-    userId: number
-    lookingForAJob: boolean
-    lookingForAJobDescription: string
-    fullName: string
-    contacts: ContactsType
-    photos: PhotosType
-}
 
 export type InitialStateType = typeof initialState
 
