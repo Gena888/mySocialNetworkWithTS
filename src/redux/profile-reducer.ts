@@ -1,5 +1,6 @@
-import { profileAPI } from './../api/api';
+import { profileAPI } from '../api/api';
 import { stopSubmit } from 'redux-form';
+import { type } from './dialogs-reducer';
 
 const ADD_POST = '/profile-reducer/ADD-POST';
 const SET_USER_PROFILE = '/profile-reducer/SET_USER_PROFILE';
@@ -8,19 +9,51 @@ const DELETE_POST = '/profile-reducer/DELETE_POST';
 const SAVE_PHOTO_SUCCESS = '/profile-reducer/SAVE_PHOTO_SUCCESS';
 const SET_IS_VALID_INPUT = '/profile-reducer/SET_IS_VALID_INPUT'
 
+type postDataType = {
+    id: number
+    likes: number
+    message: string
+}
+
+type ContactsType = {
+    github: string
+    vk: string
+    facebook: string
+    instagram: string
+    twitter: string
+    website: string
+    youtube: string
+    mainLink: string
+}
+
+type PhotosType = {
+    small: string | null
+    large: string | null
+}
+
+type ProfileType = {
+    userId: number
+    lookingForAJob: boolean
+    lookingForAJobDescription: string
+    fullName: string
+    contacts: ContactsType
+    photos: PhotosType
+}
+
+export type InitialStateType = typeof initialState
 
 let initialState = {
     postsData: [
         { id: 1, likes: 121, message: 'Hallow it\'s my first post. ' },
         { id: 2, likes: 231, message: 'Here should be second post but i\'v got no idea.' },
         { id: 3, likes: 321, message: 'For third post i\'v still have no idea. I guess twitter in not for me.' }
-    ],
-    profile: null,
-    status: null,
-    isValidInput: false
+    ] as Array<postDataType>,
+    profile: null as ProfileType | null,
+    status: ' ' as string,
+    isValidInput: false as boolean
 };
 
-const profileReducer = (state = initialState, action) => {
+const profileReducer = (state = initialState, action: any): InitialStateType => {
     switch (action.type) {
 
         case ADD_POST:
@@ -57,7 +90,8 @@ const profileReducer = (state = initialState, action) => {
                 profile: {
                     ...state.profile,
                     photos: action.photos
-                }
+                } as ProfileType
+                // временное решение
             }
         case SET_IS_VALID_INPUT:
             return {
@@ -74,29 +108,55 @@ const profileReducer = (state = initialState, action) => {
 };
 // action creators
 
-export const deletePostAC = (postId) => ({ type: DELETE_POST, postId })
-export const addNewPostAC = (newTextBody) => ({ type: ADD_POST, newTextBody });
-export const setUserProfile = (profile) => ({ type: SET_USER_PROFILE, profile })
-export const setStatus = (status) => ({ type: SET_STATUS, status: status })
-export const savaPhotoSuccess = (photos) => ({ type: SAVE_PHOTO_SUCCESS, photos })
-export const setIsValidInput = (isValid) => ({ type: SET_IS_VALID_INPUT, isValid })
+type DeletePostACActionType = {
+    type: typeof DELETE_POST
+    postId: number
+}
+type AddNewPostACActionType = {
+    type: typeof ADD_POST
+    newTextBody: string
+}
+type SetUserProfileActionType = {
+    type: typeof SET_USER_PROFILE
+    profile: ProfileType | null
+}
+type SetStatusActionType = {
+    type: typeof SET_STATUS
+    status: string
+}
+type SavaPhotoSuccessActionType = {
+    type: typeof SAVE_PHOTO_SUCCESS
+    photos: PhotosType
+}
+type SetIsValidInputActionType = {
+    type: typeof SET_IS_VALID_INPUT
+    isValid: boolean
+}
+
+
+export const deletePostAC = (postId: number): DeletePostACActionType => ({ type: DELETE_POST, postId })
+export const addNewPostAC = (newTextBody: string): AddNewPostACActionType => ({ type: ADD_POST, newTextBody });
+export const setUserProfile = (profile: ProfileType): SetUserProfileActionType => ({ type: SET_USER_PROFILE, profile })
+export const setStatus = (status: string): SetStatusActionType => ({ type: SET_STATUS, status })
+export const savaPhotoSuccess = (photos: PhotosType): SavaPhotoSuccessActionType => ({ type: SAVE_PHOTO_SUCCESS, photos })
+export const setIsValidInput = (isValid: boolean): SetIsValidInputActionType => ({ type: SET_IS_VALID_INPUT, isValid })
 
 /// thunks
 
 
-export const getProfileDataThunk = (userId) => async (dispatch) => {
+export const getProfileDataThunk = (userId: number) => async (dispatch: any) => {
     let data = await profileAPI.getProfileData(userId)
     dispatch(setUserProfile(data));
 }
 
-export const getStatusThunk = (userId) => async (dispatch) => {
+export const getStatusThunk = (userId: number) => async (dispatch: any) => {
     let data = await profileAPI.getStatus(userId)
     dispatch(setStatus(data));
 }
 //по окончанию асинхронной операции мы пытаемся выполнить try, если пришла ошибка -
 // - мы перехватываем её catch и что то с ней делаем, в ней есть message. код шибки(500/404 и тд.)
 // это локальный обработчик ошибок в противовес глоаблному в app.js
-export const updateStatusThunk = (status) => async (dispatch) => {
+export const updateStatusThunk = (status: string) => async (dispatch: any) => {
     try {
         let data = await profileAPI.updateStatus(status)
         if (data.resultCode === 0) {
@@ -107,7 +167,7 @@ export const updateStatusThunk = (status) => async (dispatch) => {
     }
 }
 
-export const savePhotoThunk = (file) => async (dispatch) => {
+export const savePhotoThunk = (file: any) => async (dispatch: any) => {
     let data = await profileAPI.putNewPhoto(file)
     if (data.resultCode === 0) {
         dispatch(savaPhotoSuccess(data.data.photos));
@@ -115,7 +175,7 @@ export const savePhotoThunk = (file) => async (dispatch) => {
 }
 
 
-export const saveProfileThunk = (profile) => async (dispatch, getState) => {
+export const saveProfileThunk = (profile: ProfileType) => async (dispatch: any, getState: any) => {
     let userId = getState().auth.userId
     let data = await profileAPI.saveProfile(profile)
     if (data.resultCode === 0) {

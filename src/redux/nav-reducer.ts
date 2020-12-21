@@ -3,7 +3,7 @@ import Erlich from './../friendsIcons/bahnam.png';
 import Gilfoyle from './../friendsIcons/gilfoyle.png';
 import Dinesh from './../friendsIcons/dinesh.png';
 
-type InitialStateType = typeof initialState
+export type InitialStateType = typeof initialState
 
 type NavFriendsDataType = {
     id: number
@@ -20,7 +20,7 @@ let initialState = {
     ] as Array<NavFriendsDataType>
 };
 
-const navReducer = (state = initialState, action: any) => {
+const navReducer = (state = initialState, action: any): InitialStateType => {
 
     return state;
 }
