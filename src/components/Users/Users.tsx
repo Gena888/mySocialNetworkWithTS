@@ -1,15 +1,25 @@
 import React from 'react';
+import { UsersType } from '../../types/types';
 import Paginator from '../Common/Paginator/Paginator';
 import User from './User/User';
 import s from './Users.module.css'
 
+type PropsType = {
+    pageSize: number
+    currentPage: number
+    totalItemsCount: number
+    onPageChanged: (pageNumber: number) => void
+    usersData: Array<UsersType>
+    followThunk: () => void
+    unfollowThunk: () => void
+    followingInProgress: Array<number>
 
-let Users = ({
+}
+
+let Users: React.FC<PropsType> = ({
     followThunk, unfollowThunk, totalItemsCount,
     followingInProgress, usersData, pageSize,
-    onPageChanged, currentPage, ...props }) => {
-
-
+    onPageChanged, currentPage }) => {
 
     return (
         <div className={s.usersWrapper}>
