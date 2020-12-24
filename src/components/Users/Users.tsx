@@ -8,12 +8,12 @@ type PropsType = {
     pageSize: number
     currentPage: number
     totalItemsCount: number
-    onPageChanged: (pageNumber: number) => void
     usersData: Array<UsersType>
-    followThunk: () => void
-    unfollowThunk: () => void
     followingInProgress: Array<number>
 
+    followThunk: () => void
+    unfollowThunk: () => void
+    onPageChanged: (pageNumber: number) => void
 }
 
 let Users: React.FC<PropsType> = ({
