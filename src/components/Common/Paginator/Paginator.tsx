@@ -19,7 +19,7 @@ let Paginator: React.FC<PropsType> = ({ onPageChanged, pageSize, currentPage, to
     }
 
     let portionCount = Math.ceil(pagesCount / portionSize);
-    let [portionNumber, setPortionNumber] = useState(1);
+    let [portionNumber, setPortionNumber] = useState<number>(1);
     let leftPortionNumber = (portionNumber - 1) * portionSize + 1;
     let rigthPortionNumber = (portionNumber * portionSize)
     //classnames( cn ) функцию в которую мы через , передаём классы 

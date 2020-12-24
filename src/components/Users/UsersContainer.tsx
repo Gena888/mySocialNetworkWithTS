@@ -8,19 +8,26 @@ import { getPageSize, getUsers, getTotalUsersCount, getcurrentPage, getIsFetchin
 import { UsersType } from '../../types/types';
 import { AppStateType } from '../../redux/redux-store';
 
-type PropsType = {
+type MapStatePropsType = {
     currentPage: number
     pageSize: number
     isFetching: boolean
     totalItemsCount: number
     usersData: Array<UsersType>
     followingInProgress: Array<number>
+}
 
+type MapDispatchPropsType = {
     getUsersThunk: (currentPage: number, pageSize: number) => void
     setCurrentPage: (pageNumber: number) => void
-    followThunk: () => void
-    unfollowThunk: () => void
+    followThunk: (userId: number) => void
+    unfollowThunk: (userId: number) => void
 }
+
+type OwnPropsType = {
+}
+
+type PropsType = MapStatePropsType & MapDispatchPropsType & OwnPropsType
 
 class UsersContainer extends React.Component<PropsType> {
 
@@ -53,7 +60,7 @@ class UsersContainer extends React.Component<PropsType> {
     }
 }
 
-const mapStateToProps = (state: AppStateType) => {
+const mapStateToProps = (state: AppStateType): MapStatePropsType => {
     return {
         usersData: getUsers(state),
         pageSize: getPageSize(state),
@@ -64,7 +71,11 @@ const mapStateToProps = (state: AppStateType) => {
     }
 }
 
+
 export default compose(
-    connect(mapStateToProps, { setCurrentPage, getUsersThunk, unfollowThunk, followThunk }),
+    connect<MapStatePropsType,
+        MapDispatchPropsType,
+        OwnPropsType, AppStateType>
+        (mapStateToProps, { getUsersThunk, setCurrentPage, unfollowThunk, followThunk }),
     // withAuthRedirect
 )(UsersContainer) 
