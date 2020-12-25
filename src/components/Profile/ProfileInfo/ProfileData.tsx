@@ -7,11 +7,15 @@ import twitterIcon from './../../../imagas/Twitter.png'
 import vkIcon from './../../../imagas/VK.png'
 import youtubeIcon from './../../../imagas/Youtube.png'
 
-import { React } from 'react';
+import React from 'react';
 import s from './ProfileInfo.module.css';
+import { ProfileType } from '../../../types/types'
 
+type PropsType = {
+    profile: ProfileType
+}
 
-const ProfileData = ({ profile, }) => {
+const ProfileData: React.FC<PropsType> = ({ profile }) => {
     return (
         <div>
 
@@ -83,7 +87,12 @@ const ProfileData = ({ profile, }) => {
     )
 }
 
-export const Contact = ({ contactTitel, ContactValue }) => {
+type ContactType = {
+    contactTitel: string
+    ContactValue: string
+}
+
+export const Contact: React.FC<ContactType> = ({ contactTitel, ContactValue }) => {
     return (
         <div className={s.contact}>
             <b>{contactTitel}: </b>{ContactValue}

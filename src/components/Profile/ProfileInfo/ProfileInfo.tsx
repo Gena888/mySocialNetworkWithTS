@@ -1,12 +1,25 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, ChangeEvent } from 'react';
 import s from './ProfileInfo.module.css';
-import Preloader from './../../Common/Preloader/Preloader';
+import Preloader from '../../Common/Preloader/Preloader';
 import ProfileStatusWithHooks from './ProfileStatusWithHooks';
 import { isUserImgLarge } from '../../Common/UserPhoto/UserPhoto';
 import ProfileDataForm from './ProfileDataForm';
 import ProfileData from './ProfileData'
+import { ProfileType } from '../../../types/types';
 
-const ProfileInfo = ({
+type PropsType = {
+    profile: ProfileType | null
+    updateStatusThunk: (status: string) => void
+    status: string
+    isOwner: boolean
+    savePhotoThunk: (file: any) => void
+    saveProfileThunk: (formData: any) => void
+    isValidInput: boolean
+    setIsValidInput: (isValid: boolean) => void
+
+}
+
+const ProfileInfo: React.FC<PropsType> = ({
     profile, updateStatusThunk, status, isOwner,
     savePhotoThunk, saveProfileThunk, isValidInput, setIsValidInput }) => {
 
@@ -16,19 +29,21 @@ const ProfileInfo = ({
 
     })
 
-    const [editMode, setEditMode] = useState(false);
+    const [editMode, setEditMode] = useState<boolean>(false);
 
     if (!profile) {
         return <Preloader />
     }
-
-    const onMainPhotoSelected = (e) => {
+    //!any
+    const onMainPhotoSelected = (e: any) => {
         if (e.target.files.length) {
             savePhotoThunk(e.target.files[0])
         }
     }
 
-    const onSubmit = (formData) => {
+    type OnSubmitType = (formData: any) => void
+
+    const onSubmit: OnSubmitType = (formData) => {
         saveProfileThunk(formData);
         // isValidInput && setEditMode(false);
 
@@ -77,7 +92,7 @@ const ProfileInfo = ({
                             />
                             : <ProfileData
                                 profile={profile}
-                                isOwner={isOwner}
+                                // isOwner={isOwner}
                             />}
                     </div>
 
