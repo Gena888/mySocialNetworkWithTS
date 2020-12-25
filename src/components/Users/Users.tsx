@@ -4,6 +4,7 @@ import Paginator from '../Common/Paginator/Paginator';
 import User from './User/User';
 import s from './Users.module.css'
 
+
 type PropsType = {
     pageSize: number
     currentPage: number

@@ -20,7 +20,10 @@ let initialState = {
     ] as Array<postDataType>,
     profile: null as ProfileType | null,
     status: ' ' as string,
-    isValidInput: false as boolean
+    isValidInput: false as boolean,
+    newPostText: ' ' as string,
+    isAuth: false as boolean
+
 };
 
 const profileReducer = (state = initialState, action: any): InitialStateType => {
@@ -106,7 +109,7 @@ type SetIsValidInputActionType = {
 
 export const deletePostAC = (postId: number): DeletePostACActionType => ({ type: DELETE_POST, postId })
 export const addNewPostAC = (newTextBody: string): AddNewPostACActionType => ({ type: ADD_POST, newTextBody });
-export const setUserProfile = (profile: ProfileType): SetUserProfileActionType => ({ type: SET_USER_PROFILE, profile })
+export const setUserProfile = (profile: ProfileType | null): SetUserProfileActionType => ({ type: SET_USER_PROFILE, profile })
 export const setStatus = (status: string): SetStatusActionType => ({ type: SET_STATUS, status })
 export const savaPhotoSuccess = (photos: PhotosType): SavaPhotoSuccessActionType => ({ type: SAVE_PHOTO_SUCCESS, photos })
 export const setIsValidInput = (isValid: boolean): SetIsValidInputActionType => ({ type: SET_IS_VALID_INPUT, isValid })
@@ -114,12 +117,12 @@ export const setIsValidInput = (isValid: boolean): SetIsValidInputActionType => 
 /// thunks
 
 
-export const getProfileDataThunk = (userId: number) => async (dispatch: any) => {
+export const getProfileDataThunk = (userId: number | null) => async (dispatch: any) => {
     let data = await profileAPI.getProfileData(userId)
     dispatch(setUserProfile(data));
 }
 
-export const getStatusThunk = (userId: number) => async (dispatch: any) => {
+export const getStatusThunk = (userId: number | null) => async (dispatch: any) => {
     let data = await profileAPI.getStatus(userId)
     dispatch(setStatus(data));
 }
@@ -145,7 +148,7 @@ export const savePhotoThunk = (file: any) => async (dispatch: any) => {
 }
 
 
-export const saveProfileThunk = (profile: ProfileType) => async (dispatch: any, getState: any) => {
+export const saveProfileThunk = (profile: ProfileType | null) => async (dispatch: any, getState: any) => {
     let userId = getState().auth.userId
     let data = await profileAPI.saveProfile(profile)
     if (data.resultCode === 0) {
