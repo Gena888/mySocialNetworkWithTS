@@ -74,7 +74,7 @@ const ProfileDataForm: React.FC<PropsType> = ({ handleSubmit, profile, error }) 
 }
 
 
-const ProfileDataReduxForm: any = reduxForm({
+const ProfileDataReduxForm = reduxForm({
     form: 'edit-profile'
 })(ProfileDataForm)
 

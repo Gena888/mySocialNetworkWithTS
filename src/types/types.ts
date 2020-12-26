@@ -38,3 +38,9 @@ export type UsersDataType = {
     totalCount: number
     error: string
 }
+
+export type NavFriendsDataType = {
+    id: number
+    imgSrc: string
+    name: string
+}

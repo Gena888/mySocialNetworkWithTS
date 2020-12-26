@@ -2,14 +2,11 @@ import Richard from './../friendsIcons/recherd.png';
 import Erlich from './../friendsIcons/bahnam.png';
 import Gilfoyle from './../friendsIcons/gilfoyle.png';
 import Dinesh from './../friendsIcons/dinesh.png';
+import { NavFriendsDataType } from '../types/types';
 
-export type InitialStateType = typeof initialState
+export type NavInitialStateType = typeof initialState
 
-type NavFriendsDataType = {
-    id: number
-    imgSrc: string
-    name: string
-}
+
 
 let initialState = {
     navFriendsData: [
@@ -20,8 +17,7 @@ let initialState = {
     ] as Array<NavFriendsDataType>
 };
 
-const navReducer = (state = initialState, action: any): InitialStateType => {
-
+const navReducer = (state = initialState, action: any): NavInitialStateType => {
     return state;
 }
 

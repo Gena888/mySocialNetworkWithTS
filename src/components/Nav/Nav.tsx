@@ -2,8 +2,14 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import s from './Nav.module.css';
 import NavFriends from './Friends/NavFriends';
+import { NavInitialStateType } from '../../redux/nav-reducer';
 
-const Nav = (props) => {
+type PropsType = {
+    navPage: NavInitialStateType
+    isAuth: boolean
+}
+
+const Nav: React.FC<PropsType> = (props) => {
     let navFriend =
         props.navPage.navFriendsData.map(navFriendEl =>
             <NavFriends key={navFriendEl.id} imgSrc={navFriendEl.imgSrc} name={navFriendEl.name} />);
@@ -40,9 +46,6 @@ const Nav = (props) => {
                 </div>
                 : <div></div>
             }
-
-
-
 
         </nav>
     );
