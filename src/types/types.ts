@@ -44,3 +44,15 @@ export type NavFriendsDataType = {
     imgSrc: string
     name: string
 }
+
+export type dialogsDataType = {
+    id: number
+    imgSrc: string
+    name: string
+}
+
+export type messagesDataType = {
+    id: number
+    message: string
+    addresserYou: boolean
+}

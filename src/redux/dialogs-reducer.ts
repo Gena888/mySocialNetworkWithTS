@@ -3,22 +3,13 @@ import Erlich from './../friendsIcons/bahnam.png';
 import Gilfoyle from './../friendsIcons/gilfoyle.png';
 import Dinesh from './../friendsIcons/dinesh.png';
 import Message from './../components/Dialogs/Message/Message';
+import { dialogsDataType, messagesDataType } from '../types/types';
 
 const ADD_NEW_MESSAGE = 'ADD-NEW-MESSAGE';
 
-export type InilialStateType = typeof inilialState
+export type DialogsInilialStateType = typeof inilialState
 
-type dialogsDataType = {
-    id: number
-    imgSrc: string
-    name: string
-}
 
-type messagesDataType = {
-    id: number
-    message: string
-    addresserYou: boolean
-}
 
 let inilialState = {
     dialogsData: [
@@ -39,7 +30,7 @@ let inilialState = {
     ] as Array<messagesDataType>
 }
 
-const dialogsReducer = (state = inilialState, action: any): InilialStateType => {
+const dialogsReducer = (state = inilialState, action: any): DialogsInilialStateType => {
 
     switch (action.type) {
 
