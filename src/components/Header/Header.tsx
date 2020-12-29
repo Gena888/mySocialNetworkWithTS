@@ -3,46 +3,51 @@ import s from './Header.module.css';
 import { NavLink } from 'react-router-dom';
 import no_ava from '../../imagas/no-avatar.png';
 import logo from './../../svg/Henadzi.png';
+import { AuthInilialStateType } from './../../redux/auth-reducer'
+import { PhotosType } from '../../types/types';
 
-const Header = (props) => {
-  
+type PropsType = {
+    login: string
+    isAuth: boolean
+    profilePhotos: PhotosType
+    userId: number
 
+    LogoutThunk: () => void
+}
+
+const Header: React.FC<PropsType> = ({ login, isAuth, LogoutThunk, profilePhotos, userId }) => {
 
     let srcOfImg = '';
-    if (props.state.photos != null) {
+    if (profilePhotos != null) {
 
-        if (props.isAuth && props.state.photos.small != null) {
-            srcOfImg = props.state.photos.small;
+        if (isAuth && profilePhotos.small != null) {
+            srcOfImg = profilePhotos.small;
         } else {
             srcOfImg = no_ava;
         }
     }
     // const onLogoutClick = () => {
-        
+
     // }
     return (
         <header className={s.header}>
             <div className={s.innerHeader}>
                 <img src={logo} alt="" />
                 <div className={s.loginBlock} >
-
-                    {props.state.photos
-                        ? <NavLink to={'/Profile/' + props.state.userId}>
+                    {profilePhotos
+                        ? <NavLink to={'/Profile/' + userId}>
                             <img src={srcOfImg} alt="small-avatar" />
                         </NavLink>
                         : <div></div>
                     }
-
-
-
-
                     <div className={s.loginBlock}>
-                        {props.isAuth
-                            ? <div> <span className={s.loginEmail}>{props.login}</span>  <button onClick={props.LogoutThunk}>Logout</button></div>
+                        {isAuth
+                            ? <div> <span className={s.loginEmail}>{login}</span>
+                                <button onClick={LogoutThunk}>Logout</button></div>
                             : <NavLink to={'/Login'} >Login</NavLink>
                         }
                     </div>
-            </div>
+                </div>
             </div>
 
         </header >

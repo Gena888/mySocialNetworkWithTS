@@ -1,5 +1,5 @@
 import React from 'react';
-import Header from './Header';
+import Header from './Header.tsx';
 import { connect } from 'react-redux';
 import { LogoutThunk } from './../../redux/auth-reducer';
 import { withAuthRedirect } from './../../Hoc/withAuthRedirect';
@@ -22,7 +22,8 @@ class HeaderContainer extends React.Component {
 let mapStateToProps = (state) => ({
     isAuth: state.auth.isAuth,
     login: state.auth.login,
-    state: state.auth
+    profilePhotos: state.profilePage.profile.photos,
+    userId: state.auth.userId
 })
 
 

@@ -1,5 +1,6 @@
 import { stopSubmit } from 'redux-form';
 import { authAPI, securityAPI } from '../api/api';
+import { PhotosType } from '../types/types';
 
 
 const SET_USER_DATA = '/auth-reducer/SET_USER_DATA';
@@ -7,7 +8,7 @@ const SET_USER_PROFILE = '/auth-reducer/SET_USER_PROFILE'
 const SET_CUPTCHA = '/auth-reducer/SET_CUPTCHA'
 const SET_ERROR = '/auth-reducer/SET_ERROR'
 
-export type inilialStateType = typeof inilialState;
+export type AuthInilialStateType = typeof inilialState;
 
 let inilialState = {
     userId: null as number | null,
@@ -17,10 +18,10 @@ let inilialState = {
     isFetching: true as boolean,
     rememberMe: false as boolean,
     captchaUrl: null as string | null,
-    inStateError: null as string | null
+    inStateError: null as string | null,
 };
 
-const authReducer = (state = inilialState, action: any): inilialStateType => {
+const authReducer = (state = inilialState, action: any): AuthInilialStateType => {
 
     switch (action.type) {
 
