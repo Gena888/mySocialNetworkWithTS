@@ -3,14 +3,13 @@ import s from './Header.module.css';
 import { NavLink } from 'react-router-dom';
 import no_ava from '../../imagas/no-avatar.png';
 import logo from './../../svg/Henadzi.png';
-import { AuthInilialStateType } from './../../redux/auth-reducer'
 import { PhotosType } from '../../types/types';
 
 type PropsType = {
-    login: string
+    login: string | nul
     isAuth: boolean
     profilePhotos: PhotosType
-    userId: number
+    userId: number | null
 
     LogoutThunk: () => void
 }
