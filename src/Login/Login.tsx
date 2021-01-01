@@ -15,21 +15,30 @@ type LoginFormOwnProps = {
     inStateError: string | null
 }
 
+export type LoginFormValuesType = {
+    email: string
+    password: string
+    rememberMe: boolean
+    captcha: string
+}
+
+type LoginFormValuesTypeKeys = Extract<keyof LoginFormValuesType, string>
+
 const LoginForm: React.FC<InjectedFormProps<LoginFormValuesType, LoginFormOwnProps> & LoginFormOwnProps> = ({ handleSubmit, error, captchaUrl, setErrorThunk, inStateError }) => {
     return (
         <form className={s.loginForm} onSubmit={handleSubmit}>
             {/* createField = (validate, placeholder, component, name, type) */}
-            {createField([required], 'Email', Input, 'email', 'text')}
-            {createField([required], 'Password', Input, 'password', 'text')}
+            {createField<LoginFormValuesTypeKeys>([required], 'Email', Input, 'email', 'text')}
+            {createField<LoginFormValuesTypeKeys>([required], 'Password', Input, 'password', 'text')}
 
-            {captchaUrl && createField([required], 'Captha', Input, 'captcha', 'text')}
+            {captchaUrl && createField<LoginFormValuesTypeKeys>([required], 'Captha', Input, 'captcha', 'text')}
             <div className={s.buttonAndRemember}>
                 <div className={s.loginButton}>
                     <button>LOGIN</button>
                 </div>
                 <div className={s.rememberMeDiv}>
                     <label >
-                        {createField([], null, Input, 'rememberMe', 'checkbox')}
+                        {createField<LoginFormValuesTypeKeys>([], null, Input, 'rememberMe', 'checkbox')}
                         <span>remember me</span>
                     </label>
                 </div>
@@ -43,8 +52,7 @@ const LoginForm: React.FC<InjectedFormProps<LoginFormValuesType, LoginFormOwnPro
     )
 }
 
-
-const LoginReduxForm = reduxForm<LoginFormValuesType, LoginFormOwnProps >({
+const LoginReduxForm = reduxForm<LoginFormValuesType, LoginFormOwnProps>({
     form: 'login'
 })(LoginForm)
 
@@ -54,17 +62,9 @@ type MapStatePropsType = {
     inStateError: string | null
 }
 
-
 type MapDispatcPropsType = {
     LoginThunk: (email: string, password: string, rememberMe: boolean, captcha: string) => void
     setErrorThunk: (error: string | null) => void
-}
-
-type LoginFormValuesType = {
-    email: string
-    password: string
-    rememberMe: boolean
-    captcha: string
 }
 
 const Login: React.FC<MapStatePropsType & MapDispatcPropsType> = ({ LoginThunk, isAuth, captchaUrl, setErrorThunk, inStateError }) => {
