@@ -6,7 +6,7 @@ import logo from './../../svg/Henadzi.png';
 import { PhotosType } from '../../types/types';
 
 type PropsType = {
-    login: string | nul
+    login: string | null
     isAuth: boolean
     profilePhotos: PhotosType
     userId: number | null
