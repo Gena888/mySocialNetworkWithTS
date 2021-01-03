@@ -1,4 +1,7 @@
-import * as axios from "axios";
+import axios, { AxiosResponse } from "axios";
+import { LoginResponseType, MeResponseType } from "../types/apiTypes";
+import { ProfileType } from "../types/types";
+import Message from './../components/Dialogs/Message/Message';
 
 
 const instanse = axios.create({
@@ -13,45 +16,46 @@ const instanse = axios.create({
 
 
 export const userAPI = {
-    unfollowUser(id) {
+    unfollowUser(id: number) {
         return instanse.delete(`follow/${id}`)
             .then(response => response.data)
     },
 
 
-    followUser(id) {
+    followUser(id: number) {
         return instanse.post(`follow/${id}`, {})
             .then(response => response.data)
     },
 
-    getUsers(currentPage, pageSize) {
+    getUsers(currentPage: number, pageSize: number) {
         return instanse.get(`users?page=${currentPage}&count=${pageSize} `)
             .then(response => response.data)
     },
 
-    getUsers2(pageNumber, pageSize) {
+    getUsers2(pageNumber: number, pageSize: number) {
         return instanse.get(`users?page=${pageNumber}&count=${pageSize}`)
             .then(response => response.data)
     }
-
 }
 
+
+
 export const profileAPI = {
-    getProfileData(profileId) {
+    getProfileData(profileId: number) {
         return instanse.get('profile/' + profileId)
             .then(response => response.data)
     },
 
-    getStatus(userId) {
+    getStatus(userId: number) {
         return instanse.get('profile/status/' + userId)
             .then(response => response.data)
     },
 
-    updateStatus(status) {
+    updateStatus(status: string) {
         return instanse.put('profile/status/', { status: status })
             .then(response => response.data)
     },
-    putNewPhoto(photoFile) {
+    putNewPhoto(photoFile: any) {
         let formData = new FormData();
         formData.append('image', photoFile)
         return instanse.put('profile/photo', formData, {
@@ -61,7 +65,7 @@ export const profileAPI = {
         })
             .then(response => response.data)
     },
-    saveProfile(profile) {
+    saveProfile(profile: ProfileType) {
         return instanse.put('profile', profile)
             .then(response => response.data)
     }
@@ -72,13 +76,13 @@ export const profileAPI = {
 export const authAPI = {
 
     me() {
-        return instanse.get('auth/me')
+        return instanse.get<MeResponseType>('auth/me')
             .then(response => response.data)
 
     },
 
-    Login(email, password, rememberMe = false, captcha = null) {
-        return instanse.post('auth/login', {
+    Login(email: string, password: string, rememberMe: boolean = false, captcha: string | null = null) {
+        return instanse.post<LoginResponseType>('auth/login', {
             email,
             password,
             rememberMe,
@@ -100,5 +104,4 @@ export const securityAPI = {
             .then(response => response.data)
     }
 }
-
 

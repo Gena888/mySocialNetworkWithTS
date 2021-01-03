@@ -1,5 +1,6 @@
 import { stopSubmit } from 'redux-form';
 import { authAPI, securityAPI } from '../api/api';
+import { ResultCodesEnum, ResultCodeCaptchaEnum } from '../types/apiTypes';
 import { PhotosType } from '../types/types';
 
 
@@ -92,7 +93,7 @@ export const setError = (error: string | null): SetErrorType => ({ type: SET_ERR
 export const getUserDataThunk = () => async (dispatch: any) => {
     let data = await authAPI.me()
 
-    if (data.resultCode === 0) {
+    if (data.resultCode === ResultCodesEnum.Success) {
         let { id, login, email } = data.data;
         dispatch(setAuthUserData(id, login, email, true, null));
     }
@@ -101,10 +102,10 @@ export const getUserDataThunk = () => async (dispatch: any) => {
 export const LoginThunk = (email: string, password: string, rememberMe: boolean, captcha: string) => async (dispatch: any) => {
     let data = await authAPI.Login(email, password, rememberMe, captcha)
 
-    if (data.resultCode === 0) {
+    if (data.resultCode === ResultCodesEnum.Success) {
         dispatch(getUserDataThunk())
         dispatch(setErrorThunk(null))
-    } else if (data.resultCode === 10) {
+    } else if (data.resultCode === ResultCodeCaptchaEnum.CaptchaIsRequired) {
         let message = data.messages.length > 0 ? data.messages[0] : 'Some error'
         dispatch(stopSubmit('login', { _error: message }))
         dispatch(getCaptchaThunk())
