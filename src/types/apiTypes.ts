@@ -1,13 +1,13 @@
 
 // userAPI
 
-import { ContactsType, PhotosType } from "./types"
+import { ContactsType, PhotosType, UsersType } from "./types"
 
 export type GetUserType = {
-    count: number
-    page: number
-    term: string
-    friend: boolean
+    items: Array<UsersType>
+    totalCount: number
+    error: string
+    
 }
 
 // profileAPI

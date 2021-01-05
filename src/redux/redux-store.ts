@@ -20,7 +20,12 @@ let rootReducer = combineReducers({
 });
 
 type RootReducerType = typeof rootReducer;
+
 export type AppStateType = ReturnType<RootReducerType>
+
+//actions type 
+type PropertiesType<T> = T extends { [key: string]: infer U } ? U : never
+export type InferActionTypes<T extends { [key: string]: (...args: any[]) => any }> = ReturnType<PropertiesType<T>>
 
 //
 // @ts-ignore
