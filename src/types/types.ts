@@ -38,19 +38,16 @@ export type UsersDataType = {
     totalCount: number
     error: string
 }
-
 export type NavFriendsDataType = {
     id: number
     imgSrc: string
     name: string
 }
-
 export type dialogsDataType = {
     id: number
     imgSrc: string
     name: string
 }
-
 export type messagesDataType = {
     id: number
     message: string
