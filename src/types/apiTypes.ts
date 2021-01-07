@@ -7,7 +7,7 @@ export type GetUserType = {
     items: Array<UsersType>
     totalCount: number
     error: string
-    
+
 }
 
 // profileAPI
@@ -23,7 +23,9 @@ export type ProfileApiType = {
 }
 
 export type ProfilePhotoApiType = {
-    data: PhotosType
+    data: {
+        photos: PhotosType
+    }
     resultCode: ResultCodesEnum
     messages: Array<string>
 }

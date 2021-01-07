@@ -113,8 +113,7 @@ export const updateStatusThunk = (status: string) => async (dispatch: any) => {
 export const savePhotoThunk = (file: any) => async (dispatch: any) => {
     let data = await profileAPI.putNewPhoto(file)
     if (data.resultCode === 0) {
-        dispatch(ProfileReducerActions.savaPhotoSuccess(data.data));
-        // dispatch(ProfileReducerActions.savaPhotoSuccess(data.data.photos));
+        dispatch(ProfileReducerActions.savaPhotoSuccess(data.data.photos));
     }
 }
 

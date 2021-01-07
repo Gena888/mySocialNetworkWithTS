@@ -2,7 +2,6 @@ import { stopSubmit } from 'redux-form';
 import { securityAPI } from "../api/securityAPI";
 import { authAPI } from "../api/authAPI";
 import { ResultCodesEnum, ResultCodeCaptchaEnum } from '../types/apiTypes';
-import { PhotosType } from '../types/types';
 import { InferActionTypes } from './redux-store';
 
 
