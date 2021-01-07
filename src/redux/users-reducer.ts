@@ -3,7 +3,7 @@ import { UsersType } from '../types/types';
 import { updateObjectInArray } from '../Utils/objects-helpers';
 import { InferActionTypes } from './redux-store';
 
-export type InilialStateType = typeof inilialState
+export type InitialStateType = typeof inilialState
 
 let inilialState = {
     usersData: [] as Array<UsersType>,
@@ -14,7 +14,7 @@ let inilialState = {
     followingInProgress: [] as Array<number>, //array of usersId
 }
 
-const usersReducer = (state = inilialState, action: ActionTypes): InilialStateType => {
+const usersReducer = (state = inilialState, action: ActionTypes): InitialStateType => {
 
     switch (action.type) {
 
@@ -66,9 +66,9 @@ const usersReducer = (state = inilialState, action: ActionTypes): InilialStateTy
 };
 
 
-export type ActionTypes = InferActionTypes<typeof actions>
+export type ActionTypes = InferActionTypes<typeof UsersReducerActions>
 
-export const actions = {
+export const UsersReducerActions = {
     follow: (userId: number) => ({ type: 'FOLLOW', userId } as const),
     unFollow: (userId: number) => ({ type: 'UNFOLLOW', userId } as const),
     setUsers: (users: Array<UsersType>) => ({ type: 'SET_USERS', users } as const),
@@ -83,32 +83,32 @@ export const actions = {
 // functions + thunks 
 
 export const getUsersThunk = (currentPage: number, pageSize: number) => async (dispatch: any) => {
-    dispatch(actions.setToggleFetching(true));
+    dispatch(UsersReducerActions.setToggleFetching(true));
     let data = await userAPI.getUsers(currentPage, pageSize)
-    dispatch(actions.setToggleFetching(false));
-    dispatch(actions.setUsers(data.items));
-    dispatch(actions.setTotalUsersCount(data.totalCount));
+    dispatch(UsersReducerActions.setToggleFetching(false));
+    dispatch(UsersReducerActions.setUsers(data.items));
+    dispatch(UsersReducerActions.setTotalUsersCount(data.totalCount));
 }
 
 const followUnfollowFlow = async (dispatch: any, userId: number, apiMethod: any, actionCreator: (userId:number) => ActionTypes) => {
 
-    dispatch(actions.toggleFollowingIsFetching(true, userId))
+    dispatch(UsersReducerActions.toggleFollowingIsFetching(true, userId))
     let data = await apiMethod(userId)
     if (data.resultCode === 0) {
         dispatch(actionCreator(userId));
     }
-    dispatch(actions.toggleFollowingIsFetching(false, userId));
+    dispatch(UsersReducerActions.toggleFollowingIsFetching(false, userId));
 }
 
 export const followThunk = (userId: number) => {
     return async (dispatch: any) => {
-        followUnfollowFlow(dispatch, userId, userAPI.followUser.bind(userAPI), actions.follow);
+        followUnfollowFlow(dispatch, userId, userAPI.followUser.bind(userAPI), UsersReducerActions.follow);
     }
 }
 
 export const unfollowThunk = (userId: number) => {
     return async (dispatch: any) => {
-        followUnfollowFlow(dispatch, userId, userAPI.unfollowUser.bind(userAPI), actions.unFollow);
+        followUnfollowFlow(dispatch, userId, userAPI.unfollowUser.bind(userAPI), UsersReducerActions.unFollow);
     }
 }
 
