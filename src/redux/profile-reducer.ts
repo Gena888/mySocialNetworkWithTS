@@ -109,18 +109,22 @@ export const updateStatusThunk = (status: string): ThunkType => async (dispatch)
     }
 }
 
-export const savePhotoThunk = (file: any): ThunkType => async (dispatch) => {
+export const savePhotoThunk = (file: File): ThunkType => async (dispatch) => {
     let data = await profileAPI.putNewPhoto(file)
     if (data.resultCode === 0) {
         dispatch(profileReducerActions.savaPhotoSuccess(data.data.photos));
     }
 }
 
-export const saveProfileThunk = (profile: ProfileType): ThunkType => async (dispatch, getState: any) => {
+export const saveProfileThunk = (profile: ProfileType): ThunkType => async (dispatch, getState) => {
     let userId = getState().auth.userId
     let data = await profileAPI.saveProfile(profile)
     if (data.resultCode === 0) {
-        dispatch(getProfileDataThunk(userId))
+        if (userId !== null) {
+            dispatch(getProfileDataThunk(userId))
+        } else {
+            throw new Error('userId cant be null')
+        }
         dispatch(profileReducerActions.setIsValidInput(true))
     } else {
         dispatch(profileReducerActions.setIsValidInput(false))

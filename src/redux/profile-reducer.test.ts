@@ -1,15 +1,19 @@
 import profileReducer, { profileReducerActions } from './profile-reducer';
 import React from 'react';
-import { postDataType } from '../types/types';
+import { postDataType, ProfileType } from '../types/types';
 
-type InitialStateType = typeof state 
 
 let state = {
     postsData: [
         { id: 1, likes: 121, message: 'hallow it.s me' },
         { id: 2, likes: 231, message: 'it is my firs post' },
         { id: 3, likes: 321, message: 'second post hear' }
-    ] as Array<postDataType>
+    ] as Array<postDataType>,
+    profile: null as ProfileType | null,
+    status: ' ' as string,
+    isValidInput: false as boolean,
+    newPostText: ' ' as string,
+    isAuth: false as boolean
 };
 
 
