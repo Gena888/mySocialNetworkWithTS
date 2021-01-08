@@ -7,7 +7,6 @@ import { NavFriendsDataType } from '../types/types';
 export type NavInitialStateType = typeof initialState
 
 
-
 let initialState = {
     navFriendsData: [
         { id: 1, imgSrc: Erlich, name: 'Erlich' },

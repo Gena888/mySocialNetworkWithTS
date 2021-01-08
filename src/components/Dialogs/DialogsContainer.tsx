@@ -1,11 +1,10 @@
 import { connect } from 'react-redux';
-import { addNewMessageAC } from '../../redux/dialogs-reducer';
+import { dialogsReduserActions } from '../../redux/dialogs-reducer';
 import Dialogs from './Dialogs';
 import { withAuthRedirect } from '../../Hoc/withAuthRedirect';
 import { compose } from 'redux';
 import { withRouter } from 'react-router-dom';
 import { reset } from 'redux-form';
-import { DialogsInilialStateType } from './../../redux/dialogs-reducer'
 import { dialogsDataType, messagesDataType } from '../../types/types';
 import { AppStateType } from '../../redux/redux-store';
 
@@ -19,7 +18,6 @@ type MapDispatchType = {
     resetForm: (formName: string) => void
 }
 
-
 let mapStateToProps = (state: AppStateType): MapStateType => {
     return {
         dialogsData: state.dialogsPage.dialogsData,
@@ -32,7 +30,7 @@ let mapStateToProps = (state: AppStateType): MapStateType => {
 let mapDispatchToProps = (dispatch: any): MapDispatchType => {
     return {
         sendMessage: (newMessageBody) => {
-            dispatch(addNewMessageAC(newMessageBody));
+            dispatch(dialogsReduserActions.addNewMessageAC(newMessageBody));
         },
         resetForm: (formName) => {
             dispatch(reset(formName));

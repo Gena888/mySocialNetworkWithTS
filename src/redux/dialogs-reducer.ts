@@ -2,13 +2,12 @@ import Richard from './../friendsIcons/recherd.png';
 import Erlich from './../friendsIcons/bahnam.png';
 import Gilfoyle from './../friendsIcons/gilfoyle.png';
 import Dinesh from './../friendsIcons/dinesh.png';
-import Message from './../components/Dialogs/Message/Message';
 import { dialogsDataType, messagesDataType } from '../types/types';
+import { InferActionTypes } from './redux-store';
 
-const ADD_NEW_MESSAGE = 'ADD-NEW-MESSAGE';
 
 export type DialogsInilialStateType = typeof inilialState
-
+export type ActionTypes = InferActionTypes<typeof dialogsReduserActions>
 
 
 let inilialState = {
@@ -30,11 +29,11 @@ let inilialState = {
     ] as Array<messagesDataType>
 }
 
-const dialogsReducer = (state = inilialState, action: any): DialogsInilialStateType => {
+const dialogsReducer = (state = inilialState, action: ActionTypes): DialogsInilialStateType => {
 
     switch (action.type) {
 
-        case ADD_NEW_MESSAGE:
+        case 'ADD_NEW_MESSAGE':
             let newMessage = action.newMessageBody;
             return {
                 ...state,
@@ -50,14 +49,9 @@ const dialogsReducer = (state = inilialState, action: any): DialogsInilialStateT
     }
 }
 
-type addNewMessageACType = {
-    type: typeof ADD_NEW_MESSAGE,
-    newMessageBody: string
+export const dialogsReduserActions = {
+    addNewMessageAC: (newMessageBody: string) => ({ type: 'ADD_NEW_MESSAGE', newMessageBody } as const)
 }
 
-export const addNewMessageAC = (newMessageBody: string): addNewMessageACType => ({
-    type: ADD_NEW_MESSAGE,
-    newMessageBody
-});
 
 export default dialogsReducer;

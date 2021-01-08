@@ -1,9 +1,11 @@
-import { stopSubmit } from 'redux-form';
+import { stopSubmit, FormAction } from 'redux-form';
 import { PhotosType, postDataType, ProfileType } from '../types/types';
 import { profileAPI } from './../api/profileAPI';
-import { InferActionTypes } from './redux-store';
+import { BaseThunkType, InferActionTypes } from './redux-store';
 
 export type InitialStateType = typeof initialState
+export type ActionTypes = InferActionTypes<typeof profileReducerActions>
+type ThunkType = BaseThunkType<ActionTypes | FormAction>
 
 let initialState = {
     postsData: [
@@ -16,7 +18,6 @@ let initialState = {
     isValidInput: false as boolean,
     newPostText: ' ' as string,
     isAuth: false as boolean
-
 };
 
 const profileReducer = (state = initialState, action: ActionTypes): InitialStateType => {
@@ -32,7 +33,6 @@ const profileReducer = (state = initialState, action: ActionTypes): InitialState
                 ...state,
                 postsData: [...state.postsData, newPost],
             };
-
         case 'SET_USER_PROFILE':
             return {
                 ...state,
@@ -43,7 +43,6 @@ const profileReducer = (state = initialState, action: ActionTypes): InitialState
             return {
                 ...state,
                 status: action.status
-
             }
         case 'DELETE_POST':
             return {
@@ -74,9 +73,9 @@ const profileReducer = (state = initialState, action: ActionTypes): InitialState
 };
 // action creators
 
-export type ActionTypes = InferActionTypes<typeof ProfileReducerActions>
 
-export const ProfileReducerActions = {
+
+export const profileReducerActions = {
     deletePostAC: (postId: number) => ({ type: 'DELETE_POST', postId } as const),
     addNewPostAC: (newTextBody: string) => ({ type: 'ADD_POST', newTextBody } as const),
     setUserProfile: (profile: ProfileType | null) => ({ type: 'SET_USER_PROFILE', profile } as const),
@@ -87,46 +86,44 @@ export const ProfileReducerActions = {
 /// thunks
 
 
-export const getProfileDataThunk = (userId: number) => async (dispatch: any) => {
+export const getProfileDataThunk = (userId: number): ThunkType => async (dispatch) => {
     let data = await profileAPI.getProfileData(userId)
-    dispatch(ProfileReducerActions.setUserProfile(data));
+    dispatch(profileReducerActions.setUserProfile(data));
 }
 
-export const getStatusThunk = (userId: number) => async (dispatch: any) => {
+export const getStatusThunk = (userId: number): ThunkType => async (dispatch) => {
     let data = await profileAPI.getStatus(userId)
-    dispatch(ProfileReducerActions.setStatus(data));
+    dispatch(profileReducerActions.setStatus(data));
 }
 //по окончанию асинхронной операции мы пытаемся выполнить try, если пришла ошибка -
 // - мы перехватываем её catch и что то с ней делаем, в ней есть message. код шибки(500/404 и тд.)
 // это локальный обработчик ошибок в противовес глоаблному в app.js
-export const updateStatusThunk = (status: string) => async (dispatch: any) => {
+export const updateStatusThunk = (status: string): ThunkType => async (dispatch) => {
     try {
         let data = await profileAPI.updateStatus(status)
         if (data.resultCode === 0) {
-            dispatch(ProfileReducerActions.setStatus(status));
+            dispatch(profileReducerActions.setStatus(status));
         }
     } catch (error) {
         console.log(error)
     }
 }
 
-export const savePhotoThunk = (file: any) => async (dispatch: any) => {
+export const savePhotoThunk = (file: any): ThunkType => async (dispatch) => {
     let data = await profileAPI.putNewPhoto(file)
     if (data.resultCode === 0) {
-        dispatch(ProfileReducerActions.savaPhotoSuccess(data.data.photos));
+        dispatch(profileReducerActions.savaPhotoSuccess(data.data.photos));
     }
 }
 
-
-export const saveProfileThunk = (profile: ProfileType) => async (dispatch: any, getState: any) => {
+export const saveProfileThunk = (profile: ProfileType): ThunkType => async (dispatch, getState: any) => {
     let userId = getState().auth.userId
     let data = await profileAPI.saveProfile(profile)
     if (data.resultCode === 0) {
         dispatch(getProfileDataThunk(userId))
-        dispatch(ProfileReducerActions.setIsValidInput(true))
-
+        dispatch(profileReducerActions.setIsValidInput(true))
     } else {
-        dispatch(ProfileReducerActions.setIsValidInput(false))
+        dispatch(profileReducerActions.setIsValidInput(false))
         let wrongNetwork = data.messages[0].slice(
             data.messages[0].indexOf(">") + 1,
             data.messages[0].indexOf(")")
@@ -141,13 +138,9 @@ export const saveProfileThunk = (profile: ProfileType) => async (dispatch: any, 
 
         // как сделать чтобы все сообщения сразу подсветились? 
     }
-
 }
 
-
 export default profileReducer;
-
-
 
 // let key = data.messages[0].match(/Contacts->(\w+)/)[1].toLowerCase();
 // dispatch(stopSubmit('edit-profile', {

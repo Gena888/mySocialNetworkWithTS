@@ -6,7 +6,7 @@ import { BaseThunkType, InferActionTypes } from './redux-store';
 
 
 export type AuthInilialStateType = typeof inilialState;
-export type ActionTypes = InferActionTypes<typeof AuthReducerActions>
+export type ActionTypes = InferActionTypes<typeof authReducerActions>
 type ThunkType = BaseThunkType<ActionTypes | FormAction>
 
 
@@ -54,7 +54,7 @@ const authReducer = (state = inilialState, action: ActionTypes): AuthInilialStat
 
 // action creators
 
-export const AuthReducerActions = {
+export const authReducerActions = {
     setAuthUserData: (userId: number | null, email: string | null, login: string | null, isAuth: boolean, captchaUrl: string | null) =>
         ({ type: 'SET_USER_DATA', payload: { userId, email, login, isAuth, captchaUrl } } as const),
     setUserProfileData: (profileUserData: any) => ({ type: 'SET_USER_PROFILE', profileUserData } as const),
@@ -69,7 +69,7 @@ export const getUserDataThunk = (): ThunkType => async (dispatch) => {
 
     if (data.resultCode === ResultCodesEnum.Success) {
         let { id, login, email } = data.data;
-        dispatch(AuthReducerActions.setAuthUserData(id, login, email, true, null));
+        dispatch(authReducerActions.setAuthUserData(id, login, email, true, null));
     }
 }
 
@@ -92,17 +92,17 @@ export const LoginThunk = (email: string, password: string, rememberMe: boolean,
 export const LogoutThunk = (): ThunkType => async (dispatch) => {
     let data = await authAPI.Logout()
     if (data.resultCode === 0) {
-        dispatch(AuthReducerActions.setAuthUserData(null, null, null, false, null))
+        dispatch(authReducerActions.setAuthUserData(null, null, null, false, null))
     }
 }
 
 export const getCaptchaThunk = (): ThunkType => async (dispatch) => {
     let data = await securityAPI.getCaptchaUrt()
-    dispatch(AuthReducerActions.setCuptchaUrl(data.url))
+    dispatch(authReducerActions.setCuptchaUrl(data.url))
 }
 
 export const setErrorThunk = (error: string | null): BaseThunkType<ActionTypes, void> => (dispatch) => {
-    dispatch(AuthReducerActions.setError(error))
+    dispatch(authReducerActions.setError(error))
 }
 
 
