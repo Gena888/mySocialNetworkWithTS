@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { ProfileReducerActions } from '../../../redux/profile-reducer';
+import { profileReducerActions } from '../../../redux/profile-reducer';
 import MyPosts from './MyPosts';
 import { reset } from 'redux-form';
 import { postDataType, ProfileType } from '../../../types/types';
@@ -31,7 +31,7 @@ const mapDispatchToProps = (dispatch: any): MapDispatchType => {
     return {
 
         addPost: (newTextBody: string) => {
-            dispatch(ProfileReducerActions.addNewPostAC(newTextBody));
+            dispatch(profileReducerActions.addNewPostAC(newTextBody));
         },
         resetForm: (formName: string) => {
             dispatch(reset(formName));
