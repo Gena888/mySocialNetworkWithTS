@@ -86,14 +86,18 @@ export const profileReducerActions = {
 /// thunks
 
 
-export const getProfileDataThunk = (userId: number): ThunkType => async (dispatch) => {
-    let data = await profileAPI.getProfileData(userId)
-    dispatch(profileReducerActions.setUserProfile(data));
+export const getProfileDataThunk = (userId: number | null): ThunkType => async (dispatch) => {
+    if (userId !== null) {
+        let data = await profileAPI.getProfileData(userId)
+        dispatch(profileReducerActions.setUserProfile(data));
+    }
 }
 
-export const getStatusThunk = (userId: number): ThunkType => async (dispatch) => {
-    let data = await profileAPI.getStatus(userId)
-    dispatch(profileReducerActions.setStatus(data));
+export const getStatusThunk = (userId: number | null): ThunkType => async (dispatch) => {
+    if (userId !== null) {
+        let data = await profileAPI.getStatus(userId)
+        dispatch(profileReducerActions.setStatus(data));
+    }
 }
 //по окончанию асинхронной операции мы пытаемся выполнить try, если пришла ошибка -
 // - мы перехватываем её catch и что то с ней делаем, в ней есть message. код шибки(500/404 и тд.)
@@ -116,32 +120,43 @@ export const savePhotoThunk = (file: File): ThunkType => async (dispatch) => {
     }
 }
 
-export const saveProfileThunk = (profile: ProfileType): ThunkType => async (dispatch, getState) => {
-    let userId = getState().auth.userId
-    let data = await profileAPI.saveProfile(profile)
-    if (data.resultCode === 0) {
-        if (userId !== null) {
-            dispatch(getProfileDataThunk(userId))
+export const saveProfileThunk = (profile: ProfileType | null): ThunkType => async (dispatch, getState) => {
+    if (profile !== null) {
+        let userId = getState().auth.userId
+        let data = await profileAPI.saveProfile(profile)
+        if (data.resultCode === 0) {
+            if (userId !== null) {
+                dispatch(getProfileDataThunk(userId))
+            } else {
+                throw new Error('userId cant be null')
+            }
+            dispatch(profileReducerActions.setIsValidInput(true))
         } else {
-            throw new Error('userId cant be null')
-        }
-        dispatch(profileReducerActions.setIsValidInput(true))
-    } else {
-        dispatch(profileReducerActions.setIsValidInput(false))
-        let wrongNetwork = data.messages[0].slice(
-            data.messages[0].indexOf(">") + 1,
-            data.messages[0].indexOf(")")
-        )
-            .toLocaleLowerCase();
-        dispatch(
-            stopSubmit("edit-profile", {
-                contacts: { [wrongNetwork]: data.messages[0] }
-            })
-        );
-        return Promise.reject(data.messages[0]);
+            dispatch(profileReducerActions.setIsValidInput(false))
+            let wrongNetwork = data.messages[0].slice(
+                data.messages[0].indexOf(">") + 1,
+                data.messages[0].indexOf(")")
+            )
+                .toLocaleLowerCase();
+            dispatch(
+                stopSubmit("edit-profile", {
+                    contacts: { [wrongNetwork]: data.messages[0] }
+                })
+            );
+            return Promise.reject(data.messages[0]);
 
-        // как сделать чтобы все сообщения сразу подсветились? 
+            // как сделать чтобы все сообщения сразу подсветились? 
+        }
     }
+}
+
+// для обхода типизации в profileContainer 
+export const setUserProfileThunk = (profile: ProfileType | null): BaseThunkType<ActionTypes, void> => (dispatch) => {
+    dispatch(profileReducerActions.setUserProfile(profile))
+}
+
+export const setIsValidInputThunk = (isValid: boolean): BaseThunkType<ActionTypes, void> => (dispatch) => {
+    dispatch(profileReducerActions.setIsValidInput(isValid))
 }
 
 export default profileReducer;

@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import React from 'react';
-import { getUsersThunk, setCurrentPage, unfollowThunk, followThunk } from '../../redux/users-reducer';
+import { getUsersThunk, setCurrentPageThunk, unfollowThunk, followThunk } from '../../redux/users-reducer';
 import Users from './Users';
 import Preloader from '../Common/Preloader/Preloader';
 import { compose } from 'redux';
@@ -19,9 +19,10 @@ type MapStatePropsType = {
 
 type MapDispatchPropsType = {
     getUsersThunk: (currentPage: number, pageSize: number) => void
-    setCurrentPage: (pageNumber: number) => void
+    // setCurrentPage: (pageNumber: number) => void
     followThunk: (userId: number) => void
     unfollowThunk: (userId: number) => void
+    setCurrentPageThunk: (page: number) => void 
 }
 
 type OwnPropsType = {
@@ -37,8 +38,8 @@ class UsersContainer extends React.Component<PropsType> {
     }
 
     onPageChanged = (pageNumber: number) => {
-        const { setCurrentPage, getUsersThunk, pageSize } = this.props
-        setCurrentPage(pageNumber);
+        const { setCurrentPageThunk, getUsersThunk, pageSize } = this.props
+        setCurrentPageThunk(pageNumber);
         getUsersThunk(pageNumber, pageSize)
     }
 
@@ -76,6 +77,6 @@ export default compose(
     connect<MapStatePropsType,
         MapDispatchPropsType,
         OwnPropsType, AppStateType>
-        (mapStateToProps, { getUsersThunk, setCurrentPage, unfollowThunk, followThunk }),
+        (mapStateToProps, { getUsersThunk, setCurrentPageThunk, unfollowThunk, followThunk }),
     // withAuthRedirect
 )(UsersContainer) 

@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Profile from './Profile';
-import { getProfileDataThunk, setUserProfile, updateStatusThunk, getStatusThunk, savePhotoThunk, saveProfileThunk, setIsValidInput } from '../../redux/profile-reducer';
+import { getProfileDataThunk, setUserProfileThunk, updateStatusThunk, getStatusThunk, savePhotoThunk, saveProfileThunk, setIsValidInputThunk } from '../../redux/profile-reducer';
 import { withRouter } from 'react-router-dom';
 import { withAuthRedirect } from '../../Hoc/withAuthRedirect';
 import { compose } from 'redux';
@@ -21,16 +21,16 @@ type MapDispatchPropsType = {
     getStatusThunk: (userId: number | null) => void
     getProfileDataThunk: (userId: number | null) => void
     updateStatusThunk: (status: string) => void
-    setUserProfile: (profile: ProfileType | null) => void
-    saveProfileThunk: (profile: ProfileType| null) => void
-    savePhotoThunk: (file: any) => void
-    setIsValidInput: (isValid: boolean) => void
+    saveProfileThunk: (profile: ProfileType | null) => void
+    savePhotoThunk: (file: File) => void
+    setUserProfileThunk: (profile: ProfileType | null) => void
+    setIsValidInputThunk: (isValid: boolean) => void
 }
-
 
 type OwnPropsType = {
     match: any
     history: Array<string>
+    
 }
 
 type PropsType = OwnPropsType & MapStatePropsType & MapDispatchPropsType
@@ -64,7 +64,7 @@ class ProfileContainer extends React.Component<PropsType> {
             <div>
                 <Profile
                     {...this.props}
-                    setIsValidInput={this.props.setIsValidInput}
+                    setIsValidInput={this.props.setIsValidInputThunk}
                     savePhotoThunk={this.props.savePhotoThunk}
                     isOwner={!this.props.match.params.userId}
                     profile={this.props.profile}
@@ -89,8 +89,8 @@ export default compose(
     connect<MapStatePropsType, MapDispatchPropsType, OwnPropsType, AppStateType>
         (mapStateToProps,
             {
-                setUserProfile, getProfileDataThunk, saveProfileThunk,
-                updateStatusThunk, getStatusThunk, savePhotoThunk, setIsValidInput
+                setUserProfileThunk, getProfileDataThunk, saveProfileThunk,
+                updateStatusThunk, getStatusThunk, savePhotoThunk, setIsValidInputThunk
             }),
     withRouter,
     // withAuthRedirect
