@@ -71,7 +71,6 @@ const ProfileDataForm: React.FC<InjectedFormProps<ProfileDataOwnPropsType>&Profi
     )
 }
 
-
 const ProfileDataReduxForm = reduxForm<ProfileDataOwnPropsType>({
     form: 'edit-profile'
 })(ProfileDataForm)
