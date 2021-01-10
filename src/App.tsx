@@ -22,6 +22,9 @@ type DispatchPropsType = {
   initializeApp: () => void
 }
 
+const SuspendedProfile = withSuspense(ProfileContainer) 
+const SuspendedDialogs = withSuspense(DialogsContainer)
+
 class App extends Component<MapPropsType & DispatchPropsType> {
   //тут мы можем задиспатчить санку на отображение глобальной ошибки.
   catchAllUnhandledError = (e: PromiseRejectionEvent) => {
@@ -55,8 +58,8 @@ class App extends Component<MapPropsType & DispatchPropsType> {
         <div className='app-wrapper-content'>
           <Switch>
             <Route exact path='/' render={() => <Redirect to={'/Profile'} />} />
-            <Route path='/Profile/:userId?' render={withSuspense(ProfileContainer)} />
-            <Route path='/Dialogs/:userId?' render={withSuspense(DialogsContainer)} />
+            <Route path='/Profile/:userId?' render={() => <SuspendedProfile/>} />
+            <Route path='/Dialogs/:userId?' render={() => <SuspendedDialogs/>} />
             {/* <Route path='/Profile/:userId?' render={() => <ProfileContainer />} />
             <Route path='/Dialogs/:userId?' render={() => <DialogsContainer />} /> */}
             <Route path='/Users' render={() => <UsersContainer />} />
