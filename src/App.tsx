@@ -1,4 +1,4 @@
-import React, { Component, lazy, Suspense } from 'react';
+import React, { Component } from 'react';
 import './App.css';
 import Settings from './components/Settings/Settings';
 import { Route, withRouter, BrowserRouter, Redirect, Switch, HashRouter } from 'react-router-dom';
@@ -11,16 +11,21 @@ import { connect, Provider } from 'react-redux';
 import Preloader from './components/Common/Preloader/Preloader';
 import { initializeApp } from './redux/app-reducer';
 import { compose } from 'redux';
-import store from './redux/redux-store';
+import store, { AppStateType } from './redux/redux-store';
 import { withSuspense } from './Hoc/withSuspense';
 
 const News = React.lazy(() => import('./components/News/News'))
 const Login = React.lazy(() => import('./Login/Login'))
 
-class App extends Component {
+type MapPropsType = ReturnType<typeof mapStateToProps>
+type DispatchPropsType = {
+  initializeApp: () => void
+}
+
+class App extends Component<MapPropsType & DispatchPropsType> {
   //тут мы можем задиспатчить санку на отображение глобальной ошибки.
-  catchAllUnhandledError = (reason, promise) => {
-    //console.log(reason, promise);
+  catchAllUnhandledError = (e: PromiseRejectionEvent) => {
+    console.log('some error.');
   }
   //метод жизненного цикла, который выполнится после вмонтирования компоненты 
   // window.addEventListener - садй эффект но в comp.DidMount допустим. 
@@ -50,8 +55,10 @@ class App extends Component {
         <div className='app-wrapper-content'>
           <Switch>
             <Route exact path='/' render={() => <Redirect to={'/Profile'} />} />
-            <Route path='/Profile/:userId?' render={() => <ProfileContainer />} />
-            <Route path='/Dialogs/:userId?' render={() => <DialogsContainer />} />
+            <Route path='/Profile/:userId?' render={withSuspense(ProfileContainer)} />
+            <Route path='/Dialogs/:userId?' render={withSuspense(DialogsContainer)} />
+            {/* <Route path='/Profile/:userId?' render={() => <ProfileContainer />} />
+            <Route path='/Dialogs/:userId?' render={() => <DialogsContainer />} /> */}
             <Route path='/Users' render={() => <UsersContainer />} />
             <Route path='/News' render={withSuspense(News)} />
             <Route path='/Settings' render={() => <Settings />} />
@@ -64,7 +71,7 @@ class App extends Component {
   }
 }
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state: AppStateType) => ({
   initialized: state.app.initialized
 })
 
@@ -74,12 +81,12 @@ const mapStateToProps = (state) => ({
 // brouser router передаёт информацию о роутинге, url
 // provider передаёт store в контекст всех дочерних компанент 
 // в контект уместо положить тема(тёмная,светлая), локализация(en/ru)
-let AppContainer = compose(
+let AppContainer = compose<React.ComponentType>(
   withRouter,
   connect(mapStateToProps, { initializeApp })
 )(App);
 
-const SamuraiJsApp = () => {
+const SamuraiJsApp: React.FC = () => {
   return (
     <HashRouter>
       <Provider store={store}>

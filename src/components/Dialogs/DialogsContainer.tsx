@@ -28,11 +28,11 @@ let mapStateToProps = (state: AppStateType): MapStateType => {
 }
 
 
-export default compose(
+export default compose<React.ComponentType>(
     connect(mapStateToProps, {
         sendMessage: dialogsReduserActions.addNewMessageAC, resetForm: reset
     }),
     withAuthRedirect,
     withRouter
-)(Dialogs)
+)(Dialogs) 
 
