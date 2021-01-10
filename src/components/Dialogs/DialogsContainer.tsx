@@ -13,10 +13,10 @@ type MapStateType = {
     messagesData: Array<messagesDataType>
 }
 
-type MapDispatchType = {
-    sendMessage: (newMessageBody: string) => void
-    resetForm: (formName: string) => void
-}
+// type MapDispatchType = {
+//     sendMessage: (newMessageBody: string) => void
+//     resetForm: (formName: string) => void
+// }
 
 let mapStateToProps = (state: AppStateType): MapStateType => {
     return {
@@ -27,21 +27,11 @@ let mapStateToProps = (state: AppStateType): MapStateType => {
     }
 }
 
-let mapDispatchToProps = (dispatch: any): MapDispatchType => {
-    return {
-        sendMessage: (newMessageBody) => {
-            dispatch(dialogsReduserActions.addNewMessageAC(newMessageBody));
-        },
-        resetForm: (formName) => {
-            dispatch(reset(formName));
-        }
-
-    }
-}
-
 
 export default compose(
-    connect(mapStateToProps, mapDispatchToProps),
+    connect(mapStateToProps, {
+        sendMessage: dialogsReduserActions.addNewMessageAC, resetForm: reset
+    }),
     withAuthRedirect,
     withRouter
 )(Dialogs)
