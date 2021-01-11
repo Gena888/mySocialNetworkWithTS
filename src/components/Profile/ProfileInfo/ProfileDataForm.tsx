@@ -7,12 +7,11 @@ import { ProfileType } from '../../../types/types';
 
 
 type ProfileDataOwnPropsType = {
-    handleSubmit: () => void
     profile: ProfileType
-    error: string
 }
+type ProfileTypeKeys = Extract<keyof ProfileType, string>
 
-const ProfileDataForm: React.FC<InjectedFormProps<ProfileDataOwnPropsType>&ProfileDataOwnPropsType> = ({ handleSubmit, profile, error }) => {
+const ProfileDataForm: React.FC<InjectedFormProps<ProfileType, ProfileDataOwnPropsType> & ProfileDataOwnPropsType> = ({ handleSubmit, profile, error }) => {
     return (
         <div className={s.profileDataForm}>
 
@@ -33,25 +32,25 @@ const ProfileDataForm: React.FC<InjectedFormProps<ProfileDataOwnPropsType>&Profi
                 <div className={s.mainInfo}>
                     <div className={s.profileDataFormDiv}>
                         <b>Full name: </b>
-                        {createField([], 'Full name', Input, "fullName", 'text')}
+                        {createField<ProfileTypeKeys>([], 'Full name', Input, "fullName", 'text')}
                     </div>
 
                     {/* aboutme */}
                     <div className={s.profileDataFormDiv}>
                         <b>Abot me: </b>
-                        {createField([], 'About me', Textarea, "aboutMe", 'text', '1')}
+                        {createField<ProfileTypeKeys>([], 'About me', Textarea, "aboutMe", 'text', '1')}
                     </div>
 
                     {/* job descriptoin */}
                     <div className={s.profileDataFormDiv}>
                         <b>My prof skills: </b>
-                        {createField([], 'My professional skills', Textarea, "lookingForAJobDescription", 'text', '1')}
+                        {createField<ProfileTypeKeys>([], 'My professional skills', Textarea, "lookingForAJobDescription", 'text', '1')}
                     </div>
                     {/* job */}
                     <div className={s.profileDataFormDiv + ' ' + s.job}>
                         <b>Looking wor a job: </b>
                         <span>
-                            {createField([], '', Input, "lookingForAJob", 'checkbox')}
+                            {createField<ProfileTypeKeys>([], '', Input, "lookingForAJob", 'checkbox')}
                         </span>
                     </div>
                 </div>
@@ -61,6 +60,7 @@ const ProfileDataForm: React.FC<InjectedFormProps<ProfileDataOwnPropsType>&Profi
                             <div key={key} className={s.contact}>
                                 <div className={s.profileDataFormDiv + ' ' + s.contactsBlog}>
                                     <b>{key}: </b>
+                                    {/* todo: create some solution for embedded objects (TS) */}
                                     {createField([], key, Input, "contacts." + key.toLocaleLowerCase(), 'text')}
                                 </div>
                             </div>)
@@ -71,7 +71,7 @@ const ProfileDataForm: React.FC<InjectedFormProps<ProfileDataOwnPropsType>&Profi
     )
 }
 
-const ProfileDataReduxForm = reduxForm<ProfileDataOwnPropsType>({
+const ProfileDataReduxForm = reduxForm<ProfileType, ProfileDataOwnPropsType>({
     form: 'edit-profile'
 })(ProfileDataForm)
 

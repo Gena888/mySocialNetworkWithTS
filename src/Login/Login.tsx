@@ -38,7 +38,7 @@ const LoginForm: React.FC<InjectedFormProps<LoginFormValuesType, LoginFormOwnPro
                 </div>
                 <div className={s.rememberMeDiv}>
                     <label >
-                        {createField<LoginFormValuesTypeKeys>([], null, Input, 'rememberMe', 'checkbox')}
+                        {createField<LoginFormValuesTypeKeys>([], undefined, Input, 'rememberMe', 'checkbox')}
                         <span>remember me</span>
                     </label>
                 </div>

@@ -9,14 +9,14 @@ import { ProfileType } from '../../../types/types';
 
 type PropsType = {
     profile: ProfileType | null
-    updateStatusThunk: (status: string) => void
     status: string
     isOwner: boolean
-    savePhotoThunk: (file: any) => void
-    saveProfileThunk: (formData: any) => void
     isValidInput: boolean
-    setIsValidInput: (isValid: boolean) => void
 
+    setIsValidInput: (isValid: boolean) => void
+    saveProfileThunk: (formData: ProfileType) => void
+    savePhotoThunk: (file: File) => void
+    updateStatusThunk: (status: string) => void
 }
 
 const ProfileInfo: React.FC<PropsType> = ({
@@ -26,27 +26,23 @@ const ProfileInfo: React.FC<PropsType> = ({
     useEffect(() => {
         isValidInput && setEditMode(false);
         setIsValidInput(false)
-
     })
 
-    const [editMode, setEditMode] = useState<boolean>(false);
+    const [editMode, setEditMode] = useState(false);
 
     if (!profile) {
         return <Preloader />
     }
-    //!any
-    const onMainPhotoSelected = (e: any) => {
-        if (e.target.files.length) {
+    // e.target.files?.length - если files не null то берём длинну и выполняем тело. (вопросительный знак!!!)
+    const onMainPhotoSelected = (e: ChangeEvent<HTMLInputElement>) => {
+        if (e.target.files?.length) {
             savePhotoThunk(e.target.files[0])
         }
     }
 
-    type OnSubmitType = (formData: any) => void
-
-    const onSubmit: OnSubmitType = (formData) => {
+    const onSubmit = (formData: ProfileType) => {
         saveProfileThunk(formData);
         // isValidInput && setEditMode(false);
-
     }
 
     return (
@@ -56,7 +52,6 @@ const ProfileInfo: React.FC<PropsType> = ({
                     {/* img */}
                     <div className={s.innetImageBlock}>
                         <img className={s.userPhoto}
-
                             src={isUserImgLarge(profile)} alt="profilePhoto" />
                         <div className={s.onImgButtons}>
                             <div className={s.changePhotoBtn}>
@@ -92,7 +87,7 @@ const ProfileInfo: React.FC<PropsType> = ({
                             />
                             : <ProfileData
                                 profile={profile}
-                                // isOwner={isOwner}
+                            // isOwner={isOwner}
                             />}
                     </div>
 
