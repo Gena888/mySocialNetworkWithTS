@@ -1,10 +1,18 @@
 import React from 'react';
 import s from './User.module.css';
 import { NavLink } from 'react-router-dom';
-import { isUserImgSmall } from './../../Common/UserPhoto/UserPhoto';
+import { isUserImgSmall } from '../../Common/UserPhoto/UserPhoto';
+import { UsersType } from '../../../types/types';
 
+type PropsType = {
+    user: UsersType
+    followingInProgress: Array<number>
 
-let User = ({
+    followThunk: (userId: number) => void
+    unfollowThunk: (userId: number) => void
+}
+
+let User: React.FC<PropsType> = ({
     followThunk, unfollowThunk,
     followingInProgress, user, ...props }) => {
 
