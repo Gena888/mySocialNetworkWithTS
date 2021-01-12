@@ -7,14 +7,21 @@ import { Textarea } from '../../Common/FormsControls/FormsControls';
 import { createField } from './../../Common/FormsControls/FormsControls';
 import { postDataType, ProfileType } from '../../../types/types';
 
-type MyPostsType = {
+
+export type MapPropsType = {
     postsData: Array<postDataType>
-    profile: ProfileType
+}
+
+export type MapDispatchPostsType = {
     addPost: (newTextBody: string) => void
     resetForm: (formName: string) => void
 }
 
-const MyPosts: React.FC<MyPostsType> = (props) => {
+type OwnPropsType = {
+    profile: ProfileType | null
+}
+
+const MyPosts: React.FC<MapPropsType & MapDispatchPostsType & OwnPropsType> = (props) => {
     let postsElement = props.postsData.map(postEl => <Post profile={props.profile && props.profile} key={postEl.id} likes={postEl.likes} message={postEl.message} />)
 
     // отсюда берём values для типа AddPostFormValuesType
