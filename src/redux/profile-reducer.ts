@@ -150,14 +150,7 @@ export const saveProfileThunk = (profile: ProfileType | null): ThunkType => asyn
     }
 }
 
-// для обхода типизации в profileContainer 
-export const setUserProfileThunk = (profile: ProfileType | null): BaseThunkType<ActionTypes, void> => (dispatch) => {
-    dispatch(profileReducerActions.setUserProfile(profile))
-}
 
-export const setIsValidInputThunk = (isValid: boolean): BaseThunkType<ActionTypes, void> => (dispatch) => {
-    dispatch(profileReducerActions.setIsValidInput(isValid))
-}
 
 export default profileReducer;
 

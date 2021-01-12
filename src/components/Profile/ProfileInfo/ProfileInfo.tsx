@@ -34,6 +34,7 @@ const ProfileInfo: React.FC<PropsType> = ({
         return <Preloader />
     }
     // e.target.files?.length - если files не null то берём длинну и выполняем тело. (вопросительный знак!!!)
+    // такая же запись по старому if (e.target.files && e.target.files.length)
     const onMainPhotoSelected = (e: ChangeEvent<HTMLInputElement>) => {
         if (e.target.files?.length) {
             savePhotoThunk(e.target.files[0])

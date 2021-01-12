@@ -1,21 +1,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Profile from './Profile';
-import { getProfileDataThunk, setUserProfileThunk, updateStatusThunk, getStatusThunk, savePhotoThunk, saveProfileThunk, setIsValidInputThunk } from '../../redux/profile-reducer';
-import { withRouter } from 'react-router-dom';
+import { profileReducerActions, getProfileDataThunk, updateStatusThunk, getStatusThunk, savePhotoThunk, saveProfileThunk } from '../../redux/profile-reducer';
+import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { withAuthRedirect } from '../../Hoc/withAuthRedirect';
 import { compose } from 'redux';
 import { ProfileType } from '../../types/types';
 import { AppStateType } from '../../redux/redux-store';
 
-type MapStatePropsType = {
-    profile: ProfileType | null
-    status: string
-    isValidInput: boolean
-    autorisedUserId: number | null
-    isAuth: boolean
-    
-}
+type MapStatePropsType = ReturnType<typeof mapStateToProps>
 
 type MapDispatchPropsType = {
     getStatusThunk: (userId: number | null) => void
@@ -23,28 +16,26 @@ type MapDispatchPropsType = {
     updateStatusThunk: (status: string) => void
     saveProfileThunk: (profile: ProfileType | null) => void
     savePhotoThunk: (file: File) => void
-    setUserProfileThunk: (profile: ProfileType | null) => void
-    setIsValidInputThunk: (isValid: boolean) => void
+    setUserProfile: (profile: ProfileType | null) => void
+    setIsValidInput: (isValid: boolean) => void
 }
-
-type OwnPropsType = {
-    match: any
-    history: Array<string>
-    
+type PathParamsType = {
+    userId: string
 }
+type RoutePropsType = RouteComponentProps<PathParamsType>
+type PropsType = RoutePropsType & MapStatePropsType & MapDispatchPropsType
 
-type PropsType = OwnPropsType & MapStatePropsType & MapDispatchPropsType
-
+// + преобразование 
 class ProfileContainer extends React.Component<PropsType> {
-
     refreshProfile() {
-        let userId: number | null = this.props.match.params.userId;
+        let userId: number | null = +this.props.match.params.userId;
         if (!userId) {
             userId = this.props.autorisedUserId;
             if (!userId) {
                 this.props.history.push('/Login')
+                // push history в любом месте кода берёт и меняет URL. условной альтернативой может быть redirect
             }
-        }
+        } 
         this.props.getProfileDataThunk(userId);
         this.props.getStatusThunk(userId);
     }
@@ -53,7 +44,7 @@ class ProfileContainer extends React.Component<PropsType> {
         this.refreshProfile()
     }
     // .match пришёл в пропсы из HOC withRouter. это инфа связанная и URL
-    componentDidUpdate(prevProps: PropsType, prevState: AppStateType) {
+    componentDidUpdate(prevProps: PropsType, prevState: PropsType) {
         if (this.props.match.params.userId != prevProps.match.params.userId) {
             this.refreshProfile()
         }
@@ -64,7 +55,7 @@ class ProfileContainer extends React.Component<PropsType> {
             <div>
                 <Profile
                     {...this.props}
-                    setIsValidInput={this.props.setIsValidInputThunk}
+                    setIsValidInput={this.props.setIsValidInput}
                     savePhotoThunk={this.props.savePhotoThunk}
                     isOwner={!this.props.match.params.userId}
                     profile={this.props.profile}
@@ -75,7 +66,7 @@ class ProfileContainer extends React.Component<PropsType> {
         )
     }
 }
-let mapStateToProps = (state: AppStateType): MapStatePropsType => ({
+let mapStateToProps = (state: AppStateType) => ({
     profile: state.profilePage.profile,
     status: state.profilePage.status,
     autorisedUserId: state.auth.userId,
@@ -85,12 +76,13 @@ let mapStateToProps = (state: AppStateType): MapStatePropsType => ({
 
 
 
-export default compose(
-    connect<MapStatePropsType, MapDispatchPropsType, OwnPropsType, AppStateType>
+export default compose<React.ComponentType>(
+    connect<MapStatePropsType, MapDispatchPropsType, RoutePropsType, AppStateType>
         (mapStateToProps,
             {
-                setUserProfileThunk, getProfileDataThunk, saveProfileThunk,
-                updateStatusThunk, getStatusThunk, savePhotoThunk, setIsValidInputThunk
+                setUserProfile: profileReducerActions.setUserProfile, getProfileDataThunk,
+                saveProfileThunk, updateStatusThunk, getStatusThunk, savePhotoThunk,
+                setIsValidInput: profileReducerActions.setIsValidInput
             }),
     withRouter,
     // withAuthRedirect
