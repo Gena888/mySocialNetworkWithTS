@@ -10,7 +10,7 @@ import { PhotosType } from '../../types/types';
 type MapStateType = {
     isAuth: boolean
     login: string | null
-    profilePhotos: PhotosType
+    profilePhotos: PhotosType | undefined
     userId: number | null
 }
 
@@ -33,8 +33,7 @@ class HeaderContainer extends React.Component<PropsType> {
 let mapStateToProps = (state: AppStateType): MapStateType => ({
     isAuth: state.auth.isAuth,
     login: state.auth.login,
-    // @ts-ignore
-    profilePhotos: state.profilePage.profile.photos, // как сделать чтобы был нал но ошибки ту не было??  убрать игнор! 
+    profilePhotos: state.profilePage.profile?.photos, 
     userId: state.auth.userId
 })
 

@@ -8,7 +8,7 @@ import { PhotosType } from '../../types/types';
 type PropsType = {
     login: string | null
     isAuth: boolean
-    profilePhotos: PhotosType
+    profilePhotos: PhotosType | undefined
     userId: number | null
 
     LogoutThunk: () => void
@@ -33,12 +33,12 @@ const Header: React.FC<PropsType> = ({ login, isAuth, LogoutThunk, profilePhotos
             <div className={s.innerHeader}>
                 <img src={logo} alt="" />
                 <div className={s.loginBlock} >
-                    {profilePhotos
+                    {/* {profilePhotos
                         ? <NavLink to={'/Profile/' + userId}>
                             <img src={srcOfImg} alt="small-avatar" />
                         </NavLink>
                         : <div></div>
-                    }
+                    } */}
                     <div className={s.loginBlock}>
                         {isAuth
                             ? <div> <span className={s.loginEmail}>{login}</span>
