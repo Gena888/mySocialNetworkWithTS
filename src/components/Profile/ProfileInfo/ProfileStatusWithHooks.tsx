@@ -1,8 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import s from './ProfileInfo.module.css'
 
+type PropsType = {
+    status: string
+    updateStatusThunk: (status: string) => void
+}
 
-const ProfileStatusWithHooks = (props) => {
+const ProfileStatusWithHooks: React.FC<PropsType> = (props) => {
 
 
     let [editMode, setEditMode] = useState(false)
@@ -24,7 +28,7 @@ const ProfileStatusWithHooks = (props) => {
         props.updateStatusThunk(status);
     }
 
-    const onStatusChange = (e) => {
+    const onStatusChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setStatus(e.currentTarget.value);
     }
 

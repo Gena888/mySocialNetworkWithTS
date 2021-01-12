@@ -14,8 +14,8 @@ export type ContactsType = {
     mainLink: string
 }
 export type PhotosType = {
-    small: string | null
-    large: string | null
+    small: string | undefined
+    large: string | undefined
 }
 export type ProfileType = {
     userId: number
@@ -23,7 +23,7 @@ export type ProfileType = {
     lookingForAJobDescription: string
     fullName: string
     contacts: ContactsType
-    photos: PhotosType
+    photos: PhotosType 
     aboutMe?: string
 }
 export type UsersType = {

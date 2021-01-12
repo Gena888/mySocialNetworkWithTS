@@ -12,7 +12,6 @@ let state = {
     profile: null as ProfileType | null,
     status: ' ' as string,
     isValidInput: false as boolean,
-    newPostText: ' ' as string,
     isAuth: false as boolean
 };
 

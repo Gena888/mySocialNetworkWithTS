@@ -17,16 +17,7 @@ type PropsType = {
     saveProfileThunk: (profile: ProfileType | null) => void
 }
 
-// type ProfileType = {
-//     setIsValidInput: (isValid: boolean) => void
-//     saveProfileThunk: (profile: ProfileType | null) => void
-//     savePhotoThunk: (file: any) => void
-//     isOwner: boolean
-//     profile: ProfileType | null
-//     status: string
-//     updateStatusThunk: (status: string) => void
-//     isValidInput: boolean
-// }
+
 
 const Profile: React.FC<PropsType> = ({
     status, updateStatusThunk, profile,
