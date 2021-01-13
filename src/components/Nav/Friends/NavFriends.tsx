@@ -2,7 +2,12 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import s from './NavFriends.module.css';
 
-const NavFriends = (props) => {
+type PropsType = {
+    name: string
+    imgSrc: string
+}
+
+const NavFriends:React.FC<PropsType> = (props) => {
     return (
 
 
