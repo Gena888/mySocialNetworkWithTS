@@ -1,9 +1,9 @@
 import React, { ChangeEvent } from 'react';
 
-type PropsType = {
+export type PropsType = {
     status: string
-
-    updateStatusThunk: (status: string) => void
+    
+    updateStatusThunk?: (status: string) => void
 }
 
 type StateType = {
@@ -28,7 +28,8 @@ class ProfileStatus extends React.Component<PropsType, StateType> {
         this.setState({
             editMode: false
         });
-        this.props.updateStatusThunk(this.state.status);
+        this.props.updateStatusThunk && this.props.updateStatusThunk(this.state.status);
+    // санки может не быть. иначе упорка в тесте с TS profile status test. 
     }
 
     onStatusChange = (e: ChangeEvent<HTMLInputElement>) => {

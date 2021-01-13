@@ -1,11 +1,12 @@
-import React from 'react';
-import { create } from 'react-test-renderer';
+import React, { ReactInstance } from 'react';
+import { create, ReactTestInstance } from 'react-test-renderer';
 import ProfileStatus from './ProfileStatus'
+
 
 describe('ProfileStatus component', () => {
     test('status from props should be in the state', () => {
         const component = create(<ProfileStatus status='GENA STATUS' />);
-        const instance = component.getInstance();
+        const instance = component.getInstance() as any;
         expect(instance.state.status).toBe('GENA STATUS');
     })
 
@@ -19,7 +20,7 @@ describe('ProfileStatus component', () => {
 
     test('After creation <span> should be displayed', () => {
         const component = create(<ProfileStatus status='GENA STATUS' />);
-        const root = component.root;
+        const root = component.root as any;
         let span = root.findByType('span');
         expect(span.length).not.toBeNull();
     })
@@ -44,7 +45,7 @@ describe('ProfileStatus component', () => {
     test('status from props should be in the state', () => {
         const mockCallback = jest.fn();
         const component = create(<ProfileStatus status='GENA STATUS' updateStatusThunk={mockCallback} />);
-        const instance = component.getInstance();
+        const instance = component.getInstance() as any;
         instance.deactivateEditMode();
         expect(mockCallback.mock.calls.length).toBe(1);
     })
