@@ -1,2 +1,0 @@
-(this.webpackJsonpmySocialNetwork=this.webpackJsonpmySocialNetwork||[]).push([[4],{305:function(s,e,c){s.exports={class:"News_class__23xtr"}},307:function(s,e,c){"use strict";c.r(e);var t=c(0),a=(c(1),c(305)),n=c.n(a);e.default=function(s){return Object(t.jsx)("div",{className:n.a.class,children:"Here will be news"})}}}]);
-//# sourceMappingURL=4.593d0c9a.chunk.js.map
