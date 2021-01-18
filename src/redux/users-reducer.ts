@@ -4,6 +4,7 @@ import { updateObjectInArray } from '../Utils/objects-helpers';
 import { BaseThunkType, InferActionTypes } from './redux-store';
 import { FormAction } from 'redux-form';
 import { Dispatch } from "react";
+import { PostPutDeleteRegularResponse } from "../types/apiTypes";
 
 export type InitialStateType = typeof inilialState
 export type ActionTypes = InferActionTypes<typeof UsersReducerActions>
@@ -91,7 +92,12 @@ export const getUsersThunk = (currentPage: number, pageSize: number): ThunkType 
     dispatch(UsersReducerActions.setTotalUsersCount(data.totalCount));
 }
 
-const followUnfollowFlow = async (dispatch: DispatchType, userId: number, apiMethod: any, actionCreator: (userId: number) => ActionTypes) => {
+const followUnfollowFlow = async (
+    dispatch: DispatchType,
+    userId: number,
+    apiMethod: (userId: number) => Promise<PostPutDeleteRegularResponse>,
+    actionCreator: (userId: number) => ActionTypes
+) => {
     dispatch(UsersReducerActions.toggleFollowingIsFetching(true, userId))
     let data = await apiMethod(userId)
     if (data.resultCode === 0) {
@@ -101,12 +107,12 @@ const followUnfollowFlow = async (dispatch: DispatchType, userId: number, apiMet
 }
 export const followThunk = (userId: number): ThunkType => {
     return async (dispatch) => {
-        followUnfollowFlow(dispatch, userId, userAPI.followUser.bind(userAPI), UsersReducerActions.follow);
+        await followUnfollowFlow(dispatch, userId, userAPI.followUser.bind(userAPI), UsersReducerActions.follow);
     }
 }
 export const unfollowThunk = (userId: number): ThunkType => {
     return async (dispatch) => {
-        followUnfollowFlow(dispatch, userId, userAPI.unfollowUser.bind(userAPI), UsersReducerActions.unFollow);
+        await followUnfollowFlow(dispatch, userId, userAPI.unfollowUser.bind(userAPI), UsersReducerActions.unFollow);
     }
 }
 // для обхода типизации в usersContainer 
