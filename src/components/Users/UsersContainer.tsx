@@ -20,7 +20,7 @@ type MapStatePropsType = {
 }
 
 type MapDispatchPropsType = {
-    getUsersThunk: (currentPage: number, pageSize: number, term: string) => void
+    getUsersThunk: (currentPage: number, pageSize: number, filterr: FilterType) => void
     // setCurrentPage: (pageNumber: number) => void
     followThunk: (userId: number) => void
     unfollowThunk: (userId: number) => void
@@ -35,19 +35,19 @@ type PropsType = MapStatePropsType & MapDispatchPropsType & OwnPropsType
 class UsersContainer extends React.Component<PropsType> {
 
     componentDidMount = () => {
-        const { getUsersThunk, currentPage, pageSize } = this.props
-        getUsersThunk(currentPage, pageSize, '')
+        const { getUsersThunk, currentPage, pageSize, filter } = this.props
+        getUsersThunk(currentPage, pageSize, filter)
     }
 
     onPageChanged = (pageNumber: number) => {
         const { setCurrentPageThunk, getUsersThunk, pageSize, filter } = this.props
         setCurrentPageThunk(pageNumber);
-        getUsersThunk(pageNumber, pageSize, filter.term)
+        getUsersThunk(pageNumber, pageSize, filter)
     }
 
     onFilterChanged = (filter: FilterType) => {
         const { getUsersThunk, pageSize } = this.props
-        getUsersThunk(1, pageSize, filter.term)
+        getUsersThunk(1, pageSize, filter)
     }
 
     render = () => {

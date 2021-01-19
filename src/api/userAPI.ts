@@ -12,8 +12,8 @@ export const userAPI = {
         return instanse.post<PostPutDeleteRegularResponse>(`follow/${id}`, {})
             .then(response => response.data);
     },
-    getUsers(currentPage: number, pageSize: number, term: string = '') {
-        return instanse.get<GetUserType>(`users?page=${currentPage}&count=${pageSize}&term=${term} `)
+    getUsers(currentPage: number, pageSize: number, term: string = '', friend: null | boolean = null) {
+        return instanse.get<GetUserType>(`users?page=${currentPage}&count=${pageSize}&term=${term}` + (friend === null  ? '' : `&friend=${friend}` ) )
             .then(response => response.data);
     },
     getUsers2(pageNumber: number, pageSize: number) {

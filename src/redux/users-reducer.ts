@@ -6,8 +6,8 @@ import { FormAction } from 'redux-form';
 import { Dispatch } from "react";
 import { PostPutDeleteRegularResponse } from "../types/apiTypes";
 
-export type InitialStateType = typeof inilialState 
-export type FilterType = typeof inilialState.filter 
+export type InitialStateType = typeof inilialState
+export type FilterType = typeof inilialState.filter
 export type ActionTypes = InferActionTypes<typeof UsersReducerActions>
 type ThunkType = BaseThunkType<ActionTypes | FormAction>
 type DispatchType = Dispatch<ActionTypes>
@@ -19,7 +19,10 @@ let inilialState = {
     currentPage: 1 as number,
     isFetching: true as boolean,
     followingInProgress: [] as Array<number>, //array of usersId
-    filter: { term: '' }
+    filter: {
+        term: '',
+        friend: null as null | boolean
+    }
 }
 
 const usersReducer = (state = inilialState, action: ActionTypes): InitialStateType => {
@@ -87,15 +90,15 @@ export const UsersReducerActions = {
     setTotalUsersCount: (totalCount: number) => ({ type: 'usersReduser/SET_TOTAL_USERS_COUNT', totalCount } as const),
     setToggleFetching: (isFetching: boolean) => ({ type: 'usersReduser/TOGGLE_IS_FETCHING', isFetching } as const),
     toggleFollowingIsFetching: (isFetching: boolean, userId: number) => ({ type: 'usersReduser/TOGGLE_IS_FOLLOWING_PROGRESS', isFetching, userId } as const),
-    setFilter: (term: string) => ({ type: 'usersReduser/SET_FILTER', payload: { term } } as const)
+    setFilter: (filter: FilterType) => ({ type: 'usersReduser/SET_FILTER', payload: filter } as const)
 }
 
 // functions + thunks 
 
-export const getUsersThunk = (currentPage: number, pageSize: number, term: string): ThunkType => async (dispatch) => {
+export const getUsersThunk = (currentPage: number, pageSize: number, filter: FilterType): ThunkType => async (dispatch) => {
     dispatch(UsersReducerActions.setToggleFetching(true));
-    dispatch(UsersReducerActions.setFilter(term))
-    let data = await userAPI.getUsers(currentPage, pageSize, term)
+    dispatch(UsersReducerActions.setFilter(filter))
+    let data = await userAPI.getUsers(currentPage, pageSize, filter.term, filter.friend)
     dispatch(UsersReducerActions.setToggleFetching(false));
     dispatch(UsersReducerActions.setUsers(data.items));
     dispatch(UsersReducerActions.setTotalUsersCount(data.totalCount));
