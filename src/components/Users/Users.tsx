@@ -1,9 +1,10 @@
-import { ErrorMessage, Field, Form, Formik } from 'formik';
 import React from 'react';
+import { FilterType } from '../../redux/users-reducer';
 import { UsersType } from '../../types/types';
 import Paginator from '../Common/Paginator/Paginator';
 import User from './User/User';
 import s from './Users.module.css'
+import { UsersSearchForm } from './usersSearchForm';
 
 
 type PropsType = {
@@ -12,7 +13,8 @@ type PropsType = {
     totalItemsCount: number
     usersData: Array<UsersType>
     followingInProgress: Array<number>
-
+    
+    onFilterChanged: (filter: FilterType) => void 
     followThunk: (userId: number) => void
     unfollowThunk: (userId: number) => void
     onPageChanged: (pageNumber: number) => void
@@ -21,11 +23,11 @@ type PropsType = {
 let Users: React.FC<PropsType> = ({
     followThunk, unfollowThunk, totalItemsCount,
     followingInProgress, usersData, pageSize,
-    onPageChanged, currentPage }) => {
+    onPageChanged, currentPage, onFilterChanged }) => {
 
     return (
         <div className={s.usersWrapper}>
-            <UsersSearchForm />
+            <UsersSearchForm onFilterChanged={onFilterChanged} />
             <div className={s.paginatorDiv}>
                 <Paginator
                     onPageChanged={onPageChanged}
@@ -50,43 +52,5 @@ let Users: React.FC<PropsType> = ({
     )
 }
 
-const UsersSearchForm = () => {
-    return (
-        <div>
-            <Formik
-                initialValues={{ email: '', password: '' }}
-                validate={values => {
-                    const errors = {};
-                    if (!values.email) {
-                        errors.email = 'Required';
-                    } else if (
-                        !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
-                    ) {
-                        errors.email = 'Invalid email address';
-                    }
-                    return errors;
-                }}
-                onSubmit={(values, { setSubmitting }) => {
-                    setTimeout(() => {
-                        alert(JSON.stringify(values, null, 2));
-                        setSubmitting(false);
-                    }, 400);
-                }}
-            >
-                {({ isSubmitting }) => (
-                    <Form>
-                        <Field type="email" name="email" />
-                        <ErrorMessage name="email" component="div" />
-                        <Field type="password" name="password" />
-                        <ErrorMessage name="password" component="div" />
-                        <button type="submit" disabled={isSubmitting}>
-                            Submit
-           </button>
-                    </Form>
-                )}
-            </Formik>
-        </div>
-    )
-}
 
 export default Users;

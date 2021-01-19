@@ -6,7 +6,8 @@ import { FormAction } from 'redux-form';
 import { Dispatch } from "react";
 import { PostPutDeleteRegularResponse } from "../types/apiTypes";
 
-export type InitialStateType = typeof inilialState
+export type InitialStateType = typeof inilialState 
+export type FilterType = typeof inilialState.filter 
 export type ActionTypes = InferActionTypes<typeof UsersReducerActions>
 type ThunkType = BaseThunkType<ActionTypes | FormAction>
 type DispatchType = Dispatch<ActionTypes>
@@ -18,6 +19,7 @@ let inilialState = {
     currentPage: 1 as number,
     isFetching: true as boolean,
     followingInProgress: [] as Array<number>, //array of usersId
+    filter: { term: '' }
 }
 
 const usersReducer = (state = inilialState, action: ActionTypes): InitialStateType => {
@@ -66,6 +68,11 @@ const usersReducer = (state = inilialState, action: ActionTypes): InitialStateTy
                     : state.followingInProgress.filter(id => id != action.userId)
             }
         }
+        case 'usersReduser/SET_FILTER': {
+            return {
+                ...state, filter: action.payload
+            }
+        }
         default:
             return state;
     }
@@ -79,14 +86,16 @@ export const UsersReducerActions = {
     setCurrentPage: (page: number) => ({ type: 'usersReduser/SET_CURRENT_PAGE', page } as const),
     setTotalUsersCount: (totalCount: number) => ({ type: 'usersReduser/SET_TOTAL_USERS_COUNT', totalCount } as const),
     setToggleFetching: (isFetching: boolean) => ({ type: 'usersReduser/TOGGLE_IS_FETCHING', isFetching } as const),
-    toggleFollowingIsFetching: (isFetching: boolean, userId: number) => ({ type: 'usersReduser/TOGGLE_IS_FOLLOWING_PROGRESS', isFetching, userId } as const)
+    toggleFollowingIsFetching: (isFetching: boolean, userId: number) => ({ type: 'usersReduser/TOGGLE_IS_FOLLOWING_PROGRESS', isFetching, userId } as const),
+    setFilter: (term: string) => ({ type: 'usersReduser/SET_FILTER', payload: { term } } as const)
 }
 
 // functions + thunks 
 
-export const getUsersThunk = (currentPage: number, pageSize: number): ThunkType => async (dispatch) => {
+export const getUsersThunk = (currentPage: number, pageSize: number, term: string): ThunkType => async (dispatch) => {
     dispatch(UsersReducerActions.setToggleFetching(true));
-    let data = await userAPI.getUsers(currentPage, pageSize)
+    dispatch(UsersReducerActions.setFilter(term))
+    let data = await userAPI.getUsers(currentPage, pageSize, term)
     dispatch(UsersReducerActions.setToggleFetching(false));
     dispatch(UsersReducerActions.setUsers(data.items));
     dispatch(UsersReducerActions.setTotalUsersCount(data.totalCount));
