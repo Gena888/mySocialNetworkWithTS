@@ -1,6 +1,7 @@
 import { Field, Form, Formik } from 'formik';
 import React from 'react';
 import { FilterType } from '../../redux/users-reducer';
+import s from './Users.module.css'
 
 const usersSearchFormValidate = (values: any) => {
     const errors = {};
@@ -19,7 +20,7 @@ export const UsersSearchForm: React.FC<PropsType> = React.memo(({ onFilterChange
     };
 
     return (
-        <div>
+        <div className={s.searchForm}>
             <Formik
                 initialValues={{ term: '', friend: null }}
                 validate={usersSearchFormValidate}
@@ -27,15 +28,17 @@ export const UsersSearchForm: React.FC<PropsType> = React.memo(({ onFilterChange
             >
                 {({ isSubmitting }) => (
                     <Form>
-                        <Field type="text" name="term" />
-                        <Field name='friend' as='select' placeholder=''>
-                            <option value="null">All</option>
-                            <option value="true">Only followed</option>
-                            <option value="false">Only unfollowed</option>
-                        </Field >
-                        <button type="submit" disabled={isSubmitting}>
-                            Find
-                        </button>
+                        <div className={s.searchFormInner}>
+                            <button className={s.searchButton} type="submit" disabled={isSubmitting}>
+                                Find
+                            </button>
+                            <Field className={s.searchInput} type="text" name="term" />
+                            <Field className={s.searchSelect} name='friend' as='select' placeholder=''>
+                                <option value="null">All users</option>
+                                <option value="true">Only followed</option>
+                                <option value="false">Only unfollowed</option>
+                            </Field >
+                        </div>
                     </Form>
                 )}
             </Formik>

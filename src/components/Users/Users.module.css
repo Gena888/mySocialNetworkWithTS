@@ -14,4 +14,62 @@
     flex-direction: column;
 }
 
-.paginatorDiv {}
+.searchForm {
+    padding: 0px;
+}
+
+.searchForm form {
+    width: 100%;
+}
+
+.searchFormInner {
+    position: relative;
+}
+
+.searchInput {
+    border: none;
+    border-bottom: solid 2px #ECE8E2;
+    font-size: 14px;
+    font-family: sans-serif;
+    background-color: transparent;
+    padding: 5px;
+    outline: none;
+    color: #626269;
+    width: 76%;
+    float: right;
+    padding-bottom: 8px;
+}
+
+.searchSelect {
+    border: none;
+    border-bottom: solid 2px #ECE8E2;
+    font-size: 14px;
+    font-family: sans-serif;
+    background-color: transparent;
+    padding: 5px;
+    outline: none;
+    color: #626269;
+    width: 20%;
+    float: left;
+    border-left: none;
+    height: 31px;
+}
+
+.searchInput:focus {
+    border: none;
+    border-bottom: solid 1px black
+}
+
+.searchButton {
+    position: absolute;
+    right: 0%;
+    margin-left: 1.5%;
+    padding: 4px 8px 3px 8px;
+    border-radius: 10%;
+    border: none;
+    background-color: #80A8CC;
+    font-family: sans-serif;
+    color: #FFFBF5;
+    outline: none;
+    cursor: pointer;
+}

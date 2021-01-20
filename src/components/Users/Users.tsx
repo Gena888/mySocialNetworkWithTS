@@ -13,8 +13,8 @@ type PropsType = {
     totalItemsCount: number
     usersData: Array<UsersType>
     followingInProgress: Array<number>
-    
-    onFilterChanged: (filter: FilterType) => void 
+
+    onFilterChanged: (filter: FilterType) => void
     followThunk: (userId: number) => void
     unfollowThunk: (userId: number) => void
     onPageChanged: (pageNumber: number) => void
@@ -27,7 +27,9 @@ let Users: React.FC<PropsType> = ({
 
     return (
         <div className={s.usersWrapper}>
-            <UsersSearchForm onFilterChanged={onFilterChanged} />
+            <div>
+                <UsersSearchForm onFilterChanged={onFilterChanged} />
+            </div>
             <div className={s.paginatorDiv}>
                 <Paginator
                     onPageChanged={onPageChanged}
@@ -36,17 +38,17 @@ let Users: React.FC<PropsType> = ({
                     pageSize={pageSize}
                 />
             </div>
-            <div className={s.usersDiv}>
-                {usersData.map((u) =>
-                    <User
-                        key={u.id}
-                        user={u}
-                        followingInProgress={followingInProgress}
-                        followThunk={followThunk}
-                        unfollowThunk={unfollowThunk}
-                    />
-                )}
-            </div>
+                <div className={s.usersDiv}>
+                    {usersData.map((u) =>
+                        <User
+                            key={u.id}
+                            user={u}
+                            followingInProgress={followingInProgress}
+                            followThunk={followThunk}
+                            unfollowThunk={unfollowThunk}
+                        />
+                    )}
+                </div>
 
         </div>
     )
