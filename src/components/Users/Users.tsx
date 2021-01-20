@@ -1,12 +1,11 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { FilterType, followThunk, setCurrentPageThunk } from '../../redux/users-reducer';
-import { UsersType } from '../../types/types';
 import Paginator from '../Common/Paginator/Paginator';
 import User from './User/User';
 import s from './Users.module.css'
 import { UsersSearchForm } from './usersSearchForm';
-import { getcurrentPage, getPageSize, getTotalUsersCount, getUsers, getIsFetching, getFollowingInProgress, getUsersFilter } from './../../redux/selectors/user-selectors';
+import { getcurrentPage, getPageSize, getTotalUsersCount, getUsers, getFollowingInProgress, getUsersFilter } from './../../redux/selectors/user-selectors';
 import { getUsersThunk, unfollowThunk } from './../../redux/users-reducer';
 
 
@@ -67,7 +66,6 @@ let Users: React.FC<PropsType> = (props) => {
                     />
                 )}
             </div>
-
         </div>
     )
 }
