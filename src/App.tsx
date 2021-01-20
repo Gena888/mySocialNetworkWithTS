@@ -4,7 +4,7 @@ import Settings from './components/Settings/Settings';
 import { Route, withRouter, BrowserRouter, Redirect, Switch, HashRouter } from 'react-router-dom';
 import DialogsContainer from './components/Dialogs/DialogsContainer';
 import NavContainer from './components/Nav/NavContainer';
-import UsersContainer from './components/Users/UsersContainer';
+import {UsersPage} from './components/Users/UsersContainer';
 import ProfileContainer from './components/Profile/ProfileContainer';
 import HeaderContainer from './components/Header/HeaderContainer';
 import { connect, Provider } from 'react-redux';
@@ -62,7 +62,7 @@ class App extends Component<MapPropsType & DispatchPropsType> {
             <Route path='/Dialogs/:userId?' render={() => <SuspendedDialogs/>} />
             {/* <Route path='/Profile/:userId?' render={() => <ProfileContainer />} />
             <Route path='/Dialogs/:userId?' render={() => <DialogsContainer />} /> */}
-            <Route path='/Users' render={() => <UsersContainer />} />
+            <Route path='/Users' render={() => <UsersPage />} />
             <Route path='/News' render={withSuspense(News)} />
             <Route path='/Settings' render={() => <Settings />} />
             <Route path='/Login' render={() => { return <React.Suspense fallback={<Preloader />}> <Login /> </React.Suspense> }} />
