@@ -16,11 +16,10 @@ type PropsType = {
     setIsValidInput: (isValid: boolean) => void
     saveProfileThunk: (formData: ProfileType) => void
     savePhotoThunk: (file: File) => void
-    updateStatusThunk: (status: string) => void
 }
 
 const ProfileInfo: React.FC<PropsType> = ({
-    profile, updateStatusThunk, status, isOwner,
+    profile, status, isOwner,
     savePhotoThunk, saveProfileThunk, isValidInput, setIsValidInput }) => {
 
     useEffect(() => {
@@ -76,8 +75,7 @@ const ProfileInfo: React.FC<PropsType> = ({
                     {/* status */}
                     <div>
                         <ProfileStatusWithHooks
-                            status={status}
-                            updateStatusThunk={updateStatusThunk} />
+                            status={status} />
                     </div>
                     <div>
                         {editMode
