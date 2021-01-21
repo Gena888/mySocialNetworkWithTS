@@ -73,9 +73,8 @@ const Login = () => {
         dispatch(setErrorThunk(error))
     }
 
-
     const onSubmit = (formData: LoginFormValuesType) => {
-        callbackLoginThunk(formData.email, formData.password, formData.rememberMe, formData.captcha)
+        dispatch(callbackLoginThunk(formData.email, formData.password, formData.rememberMe, formData.captcha))
     }
 
     if (isAuth) {
