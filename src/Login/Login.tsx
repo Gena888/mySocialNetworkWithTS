@@ -3,11 +3,12 @@ import { InjectedFormProps, reduxForm, submit } from 'redux-form';
 import { Input } from '../components/Common/FormsControls/FormsControls';
 import { required } from '../Utils/Validators/Validaors';
 import { LoginThunk, setErrorThunk } from '../redux/auth-reducer';
-import { connect } from 'react-redux';
+import { connect, useSelector, useDispatch } from 'react-redux';
 import { Redirect } from 'react-router';
 import s from './Login.module.css'
 import { createField } from '../components/Common/FormsControls/FormsControls';
 import { AppStateType } from '../redux/redux-store';
+import { getIsAuth, getCaptchaUrl, getInStateError } from '../redux/selectors/login-selectors';
 
 type LoginFormOwnProps = {
     captchaUrl: string | null
@@ -56,22 +57,27 @@ const LoginReduxForm = reduxForm<LoginFormValuesType, LoginFormOwnProps>({
     form: 'login'
 })(LoginForm)
 
-type MapStatePropsType = {
-    isAuth: boolean
-    captchaUrl: string | null
-    inStateError: string | null
-}
 
-type MapDispatcPropsType = {
-    LoginThunk: (email: string, password: string, rememberMe: boolean, captcha: string) => void
-    setErrorThunk: (error: string | null) => void
-}
 
-const Login: React.FC<MapStatePropsType & MapDispatcPropsType> = ({ LoginThunk, isAuth, captchaUrl, setErrorThunk, inStateError }) => {
+
+const Login = () => {
+
+    const isAuth = useSelector(getIsAuth)
+    const captchaUrl = useSelector(getCaptchaUrl)
+    const inStateError = useSelector(getInStateError)
+    const dispatch = useDispatch()
+    const callbackLoginThunk = (email: string, password: string, rememberMe: boolean, captcha: string) => {
+        dispatch(LoginThunk(email, password, rememberMe, captcha))
+    }
+    const callbackSetErrorThunk = (error: string | null) => {
+        dispatch(setErrorThunk(error))
+    }
+
 
     const onSubmit = (formData: LoginFormValuesType) => {
-        LoginThunk(formData.email, formData.password, formData.rememberMe, formData.captcha)
+        callbackLoginThunk(formData.email, formData.password, formData.rememberMe, formData.captcha)
     }
+
     if (isAuth) {
         return <Redirect to={'/profile'} />
     }
@@ -82,7 +88,7 @@ const Login: React.FC<MapStatePropsType & MapDispatcPropsType> = ({ LoginThunk, 
             <LoginReduxForm
                 onSubmit={onSubmit}
                 captchaUrl={captchaUrl}
-                setErrorThunk={setErrorThunk}
+                setErrorThunk={callbackSetErrorThunk}
                 inStateError={inStateError}
             />
             <div>
@@ -92,11 +98,5 @@ const Login: React.FC<MapStatePropsType & MapDispatcPropsType> = ({ LoginThunk, 
     )
 }
 
-const mapStateToProps = (state: AppStateType): MapStatePropsType => ({
-    isAuth: state.auth.isAuth,
-    captchaUrl: state.auth.captchaUrl,
-    inStateError: state.auth.inStateError
 
-})
-
-export default connect(mapStateToProps, { LoginThunk, setErrorThunk })(Login);
+export default Login;

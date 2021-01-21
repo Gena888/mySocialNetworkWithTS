@@ -15,7 +15,6 @@ type PropsType = {
 const Profile: React.FC<PropsType> = ({ isOwner }) => {
     const profile = useSelector(getProfile)
     const status = useSelector(getStatus)
-
     const isAuth = useSelector(getIsAuth)
     const isValidInput = useSelector(getIsValidInput)
 
