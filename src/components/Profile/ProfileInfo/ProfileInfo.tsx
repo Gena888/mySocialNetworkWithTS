@@ -9,7 +9,6 @@ import { ProfileType } from '../../../types/types';
 
 type PropsType = {
     profile: ProfileType | null
-    status: string
     isOwner: boolean
     isValidInput: boolean
 
@@ -19,8 +18,8 @@ type PropsType = {
 }
 
 const ProfileInfo: React.FC<PropsType> = ({
-    profile, status, isOwner,
-    savePhotoThunk, saveProfileThunk, isValidInput, setIsValidInput }) => {
+    profile, isOwner, savePhotoThunk,
+    saveProfileThunk, isValidInput, setIsValidInput }) => {
 
     useEffect(() => {
         isValidInput && setEditMode(false);
@@ -74,8 +73,7 @@ const ProfileInfo: React.FC<PropsType> = ({
                 <div className={s.infoBlock}>
                     {/* status */}
                     <div>
-                        <ProfileStatusWithHooks
-                            status={status} />
+                        <ProfileStatusWithHooks />
                     </div>
                     <div>
                         {editMode
