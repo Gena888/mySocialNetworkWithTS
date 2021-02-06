@@ -2,19 +2,22 @@ import React from 'react';
 import s from './Dialogs.module.css'
 import DialogItem from './DialogItem/DialogItem';
 import Message from './Message/Message';
-import { Field, reduxForm, InjectedFormProps } from 'redux-form';
+import { Field, reduxForm, InjectedFormProps, reset } from 'redux-form';
 import { Textarea } from '../Common/FormsControls/FormsControls';
 import { maxLengthCreator, required } from '../../Utils/Validators/Validaors';
-import { DialogsInilialStateType } from './../../redux/dialogs-reducer'
+import { DialogsInilialStateType, dialogsReduserActions } from './../../redux/dialogs-reducer'
 import { dialogsDataType, messagesDataType } from '../../types/types';
 import { createField } from './../Common/FormsControls/FormsControls';
+import { useSelector, useDispatch } from 'react-redux';
+import { getDialogsData, getMessagesData } from './../../redux/selectors/dialogs-selectors';
 
 type PropsType = {
     // dialogsPage: DialogsInilialStateType
-    dialogsData: Array<dialogsDataType>
-    messagesData: Array<messagesDataType>
-    sendMessage: (newMessageBody: string) => void
-    resetForm: (formName: string) => void
+
+    // dialogsData: Array<dialogsDataType>
+    // messagesData: Array<messagesDataType>
+    // sendMessage: (newMessageBody: string) => void
+    // resetForm: (formName: string) => void
     match: {
         params: {
             userId: number
@@ -23,17 +26,28 @@ type PropsType = {
 }
 
 const Dialogs: React.FC<PropsType> = (props) => {
+    const dialogsData = useSelector(getDialogsData)
+    const messagesData = useSelector(getMessagesData)
+
+    const dispatch = useDispatch()
+
+    const sendMessage = (newMessageBody: string) => {
+        dispatch(dialogsReduserActions.addNewMessageAC(newMessageBody))
+    }
+    const resetForm = (formName: string) => {
+        dispatch(reset(formName))
+    }
 
     let addNewMessage = (values: NewMessageFormType) => {
-        props.sendMessage(values.newMessageBody);
-        props.resetForm('dialogAddMessageForm')
+        sendMessage(values.newMessageBody);
+        resetForm('dialogAddMessageForm')
     };
 
     let dialogsElements =
-        props.dialogsData.map((dialogEl) =>
+        dialogsData.map((dialogEl) =>
             <DialogItem paramsUserId={props.match.params.userId} key={dialogEl.id} name={dialogEl.name} id={dialogEl.id} imgSrc={dialogEl.imgSrc} />)
     let messagesElements =
-        props.messagesData.map((messageEl) =>
+        messagesData.map((messageEl) =>
             <Message key={messageEl.id} message={messageEl.message} addresserYou={messageEl.addresserYou} />)
 
 
