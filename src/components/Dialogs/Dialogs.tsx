@@ -2,22 +2,15 @@ import React from 'react';
 import s from './Dialogs.module.css'
 import DialogItem from './DialogItem/DialogItem';
 import Message from './Message/Message';
-import { Field, reduxForm, InjectedFormProps, reset } from 'redux-form';
+import { reduxForm, InjectedFormProps, reset } from 'redux-form';
 import { Textarea } from '../Common/FormsControls/FormsControls';
 import { maxLengthCreator, required } from '../../Utils/Validators/Validaors';
-import { DialogsInilialStateType, dialogsReduserActions } from './../../redux/dialogs-reducer'
-import { dialogsDataType, messagesDataType } from '../../types/types';
+import { dialogsReduserActions } from './../../redux/dialogs-reducer'
 import { createField } from './../Common/FormsControls/FormsControls';
 import { useSelector, useDispatch } from 'react-redux';
 import { getDialogsData, getMessagesData } from './../../redux/selectors/dialogs-selectors';
 
 type PropsType = {
-    // dialogsPage: DialogsInilialStateType
-
-    // dialogsData: Array<dialogsDataType>
-    // messagesData: Array<messagesDataType>
-    // sendMessage: (newMessageBody: string) => void
-    // resetForm: (formName: string) => void
     match: {
         params: {
             userId: number
