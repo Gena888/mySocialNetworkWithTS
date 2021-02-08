@@ -6,20 +6,33 @@ import { isUserImgLarge } from '../../Common/UserPhoto/UserPhoto';
 import ProfileDataForm from './ProfileDataForm';
 import ProfileData from './ProfileData'
 import { ProfileType } from '../../../types/types';
+import { savePhotoThunk, profileReducerActions, saveProfileThunk } from './../../../redux/profile-reducer';
+import { useDispatch } from 'react-redux';
+
 
 type PropsType = {
     profile: ProfileType | null
     isOwner: boolean
     isValidInput: boolean
-
-    setIsValidInput: (isValid: boolean) => void
-    saveProfileThunk: (formData: ProfileType) => void
-    savePhotoThunk: (file: File) => void
 }
 
+
+
 const ProfileInfo: React.FC<PropsType> = ({
-    profile, isOwner, savePhotoThunk,
-    saveProfileThunk, isValidInput, setIsValidInput }) => {
+    profile, isOwner, isValidInput }) => {
+
+    const dispatch = useDispatch()
+
+    const setIsValidInput = (isValid: boolean) => {
+        dispatch(profileReducerActions.setIsValidInput(isValid))
+    }
+    const savePhotoThunk = (file: any) => {
+        dispatch(savePhotoThunk(file))
+    }
+    const saveProfileThunk = (profile: ProfileType | null) => {
+        dispatch(saveProfileThunk(profile))
+    }
+
 
     useEffect(() => {
         isValidInput && setEditMode(false);
