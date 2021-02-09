@@ -26,10 +26,10 @@ const ProfileInfo: React.FC<PropsType> = ({
     const setIsValidInput = (isValid: boolean) => {
         dispatch(profileReducerActions.setIsValidInput(isValid))
     }
-    const savePhotoThunk = (file: any) => {
+    const savePhoto = (file: any) => {
         dispatch(savePhotoThunk(file))
     }
-    const saveProfileThunk = (profile: ProfileType | null) => {
+    const saveProfile = (profile: ProfileType | null) => {
         dispatch(saveProfileThunk(profile))
     }
 
@@ -48,12 +48,12 @@ const ProfileInfo: React.FC<PropsType> = ({
     // такая же запись по старому if (e.target.files && e.target.files.length)
     const onMainPhotoSelected = (e: ChangeEvent<HTMLInputElement>) => {
         if (e.target.files?.length) {
-            savePhotoThunk(e.target.files[0])
+            savePhoto(e.target.files[0])
         }
     }
 
     const onSubmit = (formData: ProfileType) => {
-        saveProfileThunk(formData);
+        saveProfile(formData);
         // isValidInput && setEditMode(false);
     }
 
