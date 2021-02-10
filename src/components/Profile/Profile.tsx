@@ -13,14 +13,12 @@ type PropsType = {
 const Profile: React.FC<PropsType> = ({ isOwner }) => {
     const profile = useSelector(getProfile)
     const isAuth = useSelector(getIsAuth)
-    const isValidInput = useSelector(getIsValidInput)
 
     return (
         <div>
             <ProfileInfo
                 isOwner={isOwner}
                 profile={profile}
-                isValidInput={isValidInput}
             />
             {isOwner && <MyPostsContainer profile={profile} />}
         </div>

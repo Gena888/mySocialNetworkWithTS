@@ -7,19 +7,21 @@ import ProfileDataForm from './ProfileDataForm';
 import ProfileData from './ProfileData'
 import { ProfileType } from '../../../types/types';
 import { savePhotoThunk, profileReducerActions, saveProfileThunk } from './../../../redux/profile-reducer';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { getIsValidInput } from './../../../redux/selectors/profile-selectors';
 
 
 type PropsType = {
     profile: ProfileType | null
     isOwner: boolean
-    isValidInput: boolean
 }
 
 
 
 const ProfileInfo: React.FC<PropsType> = ({
-    profile, isOwner, isValidInput }) => {
+    profile, isOwner,  }) => {
+
+    const isValidInput = useSelector(getIsValidInput)
 
     const dispatch = useDispatch()
 
