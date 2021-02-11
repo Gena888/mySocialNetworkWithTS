@@ -3,18 +3,24 @@ import s from './Header.module.css';
 import { NavLink } from 'react-router-dom';
 import no_ava from '../../imagas/no-avatar.png';
 import logo from './../../svg/Henadzi.png';
-import { PhotosType } from '../../types/types';
+import { useSelector, useDispatch } from 'react-redux';
+import { getIsAuth, getLogin, getProfilePhotos, getUserId } from '../../redux/selectors/header-selectors';
+import { LogoutThunk } from '../../redux/auth-reducer';
 
 type PropsType = {
-    login: string | null
-    isAuth: boolean
-    profilePhotos: PhotosType | undefined
-    userId: number | null
-
-    LogoutThunk: () => void
 }
 
-const Header: React.FC<PropsType> = ({ login, isAuth, LogoutThunk, profilePhotos, userId }) => {
+const Header: React.FC<PropsType> = () => {
+
+    let isAuth = useSelector(getIsAuth)
+    let login = useSelector(getLogin)
+    let profilePhotos = useSelector(getProfilePhotos)
+    let userId = useSelector(getUserId)
+    let dispatch = useDispatch()
+
+    let Logout = () => {
+        dispatch(LogoutThunk)
+    }
 
     let srcOfImg = '';
     if (profilePhotos != null) {
@@ -42,7 +48,7 @@ const Header: React.FC<PropsType> = ({ login, isAuth, LogoutThunk, profilePhotos
                     <div className={s.loginBlock}>
                         {isAuth
                             ? <div> <span className={s.loginEmail}>{login}</span>
-                                <button onClick={LogoutThunk}>Logout</button></div>
+                                <button onClick={Logout}>Logout</button></div>
                             : <NavLink to={'/Login'} >Login</NavLink>
                         }
                     </div>
