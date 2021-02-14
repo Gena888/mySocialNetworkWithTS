@@ -19,7 +19,7 @@ const Header: React.FC<PropsType> = () => {
     let dispatch = useDispatch()
 
     let Logout = () => {
-        dispatch(LogoutThunk)
+        dispatch(LogoutThunk())
     }
 
     let srcOfImg = '';
