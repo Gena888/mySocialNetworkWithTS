@@ -66,15 +66,13 @@ const Login = () => {
     const captchaUrl = useSelector(getCaptchaUrl)
     const inStateError = useSelector(getInStateError)
     const dispatch = useDispatch()
-    const callbackLoginThunk = (email: string, password: string, rememberMe: boolean, captcha: string) => {
-        dispatch(LoginThunk(email, password, rememberMe, captcha))
-    }
+
     const callbackSetErrorThunk = (error: string | null) => {
         dispatch(setErrorThunk(error))
     }
 
     const onSubmit = (formData: LoginFormValuesType) => {
-        dispatch(callbackLoginThunk(formData.email, formData.password, formData.rememberMe, formData.captcha))
+        dispatch(LoginThunk(formData.email, formData.password, formData.rememberMe, formData.captcha))
     }
 
     if (isAuth) {
